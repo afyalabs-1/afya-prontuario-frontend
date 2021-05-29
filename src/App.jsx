@@ -1,6 +1,8 @@
 import React from "react";
-import Dashboard from "./pages/dashboard";
+
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+import Dashboard from "./pages/dashboard";
 
 
 const theme = createMuiTheme({
@@ -13,12 +15,12 @@ const theme = createMuiTheme({
 
 const App = () => {
   return (
-    <>
+   
         <ThemeProvider theme={theme}>
             <Dashboard></Dashboard>
         </ThemeProvider>
       
-    </>
+   
   );
 };
 
