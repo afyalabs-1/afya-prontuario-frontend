@@ -16,6 +16,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { mainListItems } from "../../components/listItems";
 import { TesteChart } from "../../components/TesteChart";
 import { Cards } from "../../components/Cards";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -140,7 +141,7 @@ export default function Dashboard() {
             {/* Inserir nome genérico para o sistema nesta linha */}
           </Typography>
 
-          <IconButton color="inherit">
+          <IconButton component={Link} to="/login" color="white">
             <ExitToAppIcon />
           </IconButton>
         </Toolbar>
