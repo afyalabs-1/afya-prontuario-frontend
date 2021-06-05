@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
-import AppointmentCard from "../../components/AppointmentCard";
-import { getAppointments } from "../../api/AppointmentApi";
+import AppointmentCard from "../../components/componentsSchedule/AppointmentCard";
+import {
+  getAppointments,
+  getAppointmentsByClientName,
+} from "../../api/AppointmentApi";
+import Loading from "../../components/Loading";
+import SearchByFilters from "../../components/componentsSchedule/SearchByFilters";
 
 const Schedule = () => {
   const [loading, setLoading] = useState(false);
@@ -18,15 +23,25 @@ const Schedule = () => {
       });
   }, []);
 
+  const getFilteredAppointments = () => {
+    getAppointmentsByClientName()
+      .then((response) => {
+        setAppointments(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Erro na requisição dos Appointments by Clients");
+      });
+  };
+
   return (
     <div>
-      {loading ? <div>Carregando...</div> : ""}
+      <SearchByFilters onClick={() => getFilteredAppointments()} />
+      {loading ? <Loading /> : ""}
+
       {appointments.map((appointment) => (
         <AppointmentCard key={appointment.id} appointment={appointment} />
       ))}
-      {/* {dummyAppointments.map((appointment) => (
-        <AppointmentCard appointment={appointment} />
-      ))} */}
     </div>
   );
 };

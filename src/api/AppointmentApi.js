@@ -106,11 +106,3 @@ export const getAppointmentsByClientName = async (clientName) => {
     })
   );
 };
-
-//Renomear arquivo para api
-
-// import axios from "axios";
-
-// export const api = axios.create({
-//   baseURL: "",
-// });
