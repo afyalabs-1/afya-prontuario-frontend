@@ -24,6 +24,7 @@ const Schedule = () => {
   }, []);
 
   const getFilteredAppointments = () => {
+    setLoading(true);
     getAppointmentsByClientName()
       .then((response) => {
         setAppointments(response.data);
@@ -37,11 +38,13 @@ const Schedule = () => {
   return (
     <div>
       <SearchByFilters onClick={() => getFilteredAppointments()} />
-      {loading ? <Loading /> : ""}
-
-      {appointments.map((appointment) => (
-        <AppointmentCard key={appointment.id} appointment={appointment} />
-      ))}
+      {loading ? (
+        <Loading />
+      ) : (
+        appointments.map((appointment) => (
+          <AppointmentCard key={appointment.id} appointment={appointment} />
+        ))
+      )}
     </div>
   );
 };
