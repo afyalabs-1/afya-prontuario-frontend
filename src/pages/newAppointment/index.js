@@ -9,6 +9,8 @@ import Grid from "@material-ui/core/Grid";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import Button from "@material-ui/core/Button";
 
+import { createNewAppointment } from "../../api/AppointmentApi";
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 200,
+    width: 150,
   },
   margin: {
     marginBottom: 20,
@@ -34,33 +36,38 @@ const useStyles = makeStyles((theme) => ({
 const NewAppointment = ({ onClick }) => {
   const classes = useStyles();
 
-  const [status, setStatus] = useState(1);
-
-  const handleChange = (event) => {
-    setStatus(event.target.value);
-  };
+  const [clientName, setClientName] = useState();
+  const [specialist, setSpecialist] = useState();
+  const [date, setDate] = useState();
+  const [time, setTime] = useState();
+  const [price, setPrice] = useState();
+  const [appointmentStatus, setAppointmentStatus] = useState(1);
 
   return (
     <div className={classes.center}>
       <form className={classes.formControl} noValidate autoComplete="off">
         <div>
           <TextField
-            id="outlined-basic"
+            id="client-name"
             label="Nome do Cliente"
             variant="outlined"
             color="secondary"
-            fullWidth="true"
+            fullWidth={true}
             justify="center"
             className={classes.margin}
+            defaultValue={clientName}
+            onChange={(e) => setClientName(e.target.value)}
           />
           <TextField
-            id="outlined-basic"
+            id="specialist"
             label="Especialista"
             variant="outlined"
             color="secondary"
-            fullWidth="true"
+            fullWidth={true}
             justify="center"
             className={classes.margin}
+            defaultValue={specialist}
+            onChange={(e) => setSpecialist(e.target.value)}
           />
           <Grid
             container
@@ -72,25 +79,41 @@ const NewAppointment = ({ onClick }) => {
           >
             <Grid item xs="auto">
               <TextField
-                id="datetime-local"
-                label="Dia e Hora"
-                type="datetime-local"
-                defaultValue="2017-05-24T10:30"
+                id="date"
+                label="Dia"
+                type="date"
                 className={classes.margin}
                 InputLabelProps={{
                   shrink: true,
                 }}
+                defaultValue={date}
+                onChange={(e) => setDate(e.target.value)}
               />
             </Grid>
             <Grid item xs="auto">
               <TextField
-                id="outlined-basic"
+                id="time"
+                label="Hora"
+                type="time"
+                className={classes.margin}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                defaultValue={time}
+                onChange={(e) => setTime(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs="auto">
+              <TextField
+                id="price"
                 label="Valor"
                 variant="outlined"
                 color="secondary"
-                fullWidth="true"
+                fullWidth={true}
                 justify="center"
                 className={classes.margin}
+                defaultValue={price}
+                onChange={(e) => setPrice(e.target.value)}
               />
             </Grid>
             <Grid item xs="auto">
@@ -98,13 +121,13 @@ const NewAppointment = ({ onClick }) => {
                 <InputLabel id="filter">Status</InputLabel>
                 <Select
                   labelId="select-status"
-                  id="select-status"
-                  value={status}
-                  onChange={handleChange}
+                  id="appointment-status"
                   label="status"
                   color="secondary"
                   justify="center"
                   className={classes.margin}
+                  value={appointmentStatus}
+                  onChange={(e) => setAppointmentStatus(e.target.value)}
                 >
                   <MenuItem value={1}>Agendado</MenuItem>
                   <MenuItem value={2}>Realizado</MenuItem>
@@ -128,7 +151,16 @@ const NewAppointment = ({ onClick }) => {
                 color="primary"
                 className={classes.button}
                 startIcon={<ScheduleIcon />}
-                onClick={onClick}
+                onClick={() => {
+                  createNewAppointment({
+                    clientName: clientName,
+                    specialist: specialist,
+                    date: date,
+                    time: time,
+                    price: price,
+                    appointmentStatus: appointmentStatus,
+                  });
+                }}
               >
                 Marcar Atendimento
               </Button>

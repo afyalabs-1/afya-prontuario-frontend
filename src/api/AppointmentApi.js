@@ -106,3 +106,12 @@ export const getAppointmentsByClientName = async (clientName) => {
     })
   );
 };
+
+export const createNewAppointment = (appointmentData) => {
+  return new Promise((resolve) =>
+    setTimeout(resolve, 2000, {
+      data: appointmentData,
+      status: "success",
+    })
+  );
+};
