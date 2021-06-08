@@ -37,7 +37,6 @@ const SearchByFilters = ({ onClick }) => {
         spacing={1}
         alignContent="center"
         justify="center"
-        alignItems="center"
         className={classes.searchGrid}
       >
         <Grid item xs="auto">
@@ -47,7 +46,7 @@ const SearchByFilters = ({ onClick }) => {
               label="Pesquisar"
               variant="outlined"
               color="secondary"
-              fullWidth="true"
+              fullWidth={true}
               justify="center"
             />
           </form>
@@ -79,7 +78,6 @@ const SearchByFilters = ({ onClick }) => {
             className={classes.button}
             startIcon={<SearchIcon />}
             onClick={onClick}
-            alignItems="center"
           >
             Filtrar
           </Button>
