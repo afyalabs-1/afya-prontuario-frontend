@@ -30,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
   },
   center: {
     margin: "auto",
+    marginLeft: theme.spacing(5),
+    marginRight: theme.spacing(5),
   },
 }));
 
