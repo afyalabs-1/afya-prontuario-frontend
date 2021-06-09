@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -8,6 +8,11 @@ import Select from "@material-ui/core/Select";
 import Grid from "@material-ui/core/Grid";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import Button from "@material-ui/core/Button";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+
+import { getAppointments } from "../../api/AppointmentApi";
+import { getSpecialist } from "../../api/SpecialistApi";
+// import { getClients } from "../../api/ClientApi";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -21,46 +26,101 @@ const useStyles = makeStyles((theme) => ({
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    width: 200,
+    width: 150,
   },
   margin: {
     marginBottom: 20,
   },
   center: {
     margin: "auto",
+    marginLeft: theme.spacing(5),
+    marginRight: theme.spacing(5),
+  },
+  buttonTest: {
+    backgroundColor: "#D31C5B",
   },
 }));
 
 const NewAppointment = ({ onClick }) => {
   const classes = useStyles();
 
-  const [status, setStatus] = useState(1);
+  const [clientName, setClientName] = useState();
+  const [specialistId, setSpecialistId] = useState();
+  const [date, setDate] = useState();
+  const [time, setTime] = useState();
+  const [price, setPrice] = useState();
+  const [appointmentStatus, setAppointmentStatus] = useState("1");
 
-  const handleChange = (event) => {
-    setStatus(event.target.value);
-  };
+  // useEffect(() => {
+  //   getClients()
+  //     .then((response) => {
+  //       console.log(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
+  const [clients, setClients] = useState([]);
+  useEffect(() => {
+    getAppointments()
+      .then((response) => {
+        setClients(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao pegar clients.");
+      });
+  }, []);
+
+  const [specialistName, setSpecialistName] = useState([]);
+  useEffect(() => {
+    getSpecialist()
+      .then((response) => {
+        setSpecialistName(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao pegar os specialists.");
+      });
+  }, []);
 
   return (
     <div className={classes.center}>
       <form className={classes.formControl} noValidate autoComplete="off">
         <div>
-          <TextField
-            id="outlined-basic"
-            label="Nome do Cliente"
-            variant="outlined"
-            color="secondary"
-            fullWidth="true"
-            justify="center"
-            className={classes.margin}
+          <Autocomplete
+            id="name"
+            options={clients}
+            getOptionLabel={(option) => option.clientName}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Nome do Cliente"
+                variant="outlined"
+                color="secondary"
+                fullWidth={true}
+                justify="center"
+                className={classes.margin}
+                defaultValue={clientName}
+                onChange={(e) => setClientName(e.target.value)}
+              />
+            )}
           />
-          <TextField
-            id="outlined-basic"
-            label="Especialista"
-            variant="outlined"
-            color="secondary"
-            fullWidth="true"
-            justify="center"
-            className={classes.margin}
+
+          <Autocomplete
+            id="specialist"
+            options={specialistName}
+            onChange={(e, value) => setSpecialistId(value.id)}
+            getOptionLabel={(option) => option.name}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Especialista"
+                variant="outlined"
+                color="secondary"
+                fullWidth={true}
+                justify="center"
+                className={classes.margin}
+              />
+            )}
           />
           <Grid
             container
@@ -72,25 +132,41 @@ const NewAppointment = ({ onClick }) => {
           >
             <Grid item xs="auto">
               <TextField
-                id="datetime-local"
-                label="Dia e Hora"
-                type="datetime-local"
-                defaultValue="2017-05-24T10:30"
+                id="date"
+                label="Dia"
+                type="date"
                 className={classes.margin}
                 InputLabelProps={{
                   shrink: true,
                 }}
+                defaultValue={date}
+                onChange={(e) => setDate(e.target.value)}
               />
             </Grid>
             <Grid item xs="auto">
               <TextField
-                id="outlined-basic"
+                id="time"
+                label="Hora"
+                type="time"
+                className={classes.margin}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                defaultValue={time}
+                onChange={(e) => setTime(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs="auto">
+              <TextField
+                id="price"
                 label="Valor"
                 variant="outlined"
                 color="secondary"
-                fullWidth="true"
+                fullWidth={true}
                 justify="center"
                 className={classes.margin}
+                defaultValue={price}
+                onChange={(e) => setPrice(e.target.value)}
               />
             </Grid>
             <Grid item xs="auto">
@@ -98,13 +174,13 @@ const NewAppointment = ({ onClick }) => {
                 <InputLabel id="filter">Status</InputLabel>
                 <Select
                   labelId="select-status"
-                  id="select-status"
-                  value={status}
-                  onChange={handleChange}
+                  id="appointment-status"
                   label="status"
                   color="secondary"
                   justify="center"
                   className={classes.margin}
+                  value={appointmentStatus}
+                  onChange={(e) => setAppointmentStatus(e.target.value)}
                 >
                   <MenuItem value={1}>Agendado</MenuItem>
                   <MenuItem value={2}>Realizado</MenuItem>
@@ -126,9 +202,9 @@ const NewAppointment = ({ onClick }) => {
               <Button
                 variant="contained"
                 color="primary"
-                className={classes.button}
+                className={classes.buttonTest}
                 startIcon={<ScheduleIcon />}
-                onClick={onClick}
+                onClick={() => {}}
               >
                 Marcar Atendimento
               </Button>
