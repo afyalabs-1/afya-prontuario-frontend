@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import AppointmentCard from "../../components/componentsSchedule/AppointmentCard";
+import Loading from "../../components/Loading";
+import SearchByFilters from "../../components/componentsSchedule/SearchByFilters";
+
 import {
   getAppointments,
   getAppointmentsByClientName,
 } from "../../api/AppointmentApi";
-import Loading from "../../components/Loading";
-import SearchByFilters from "../../components/componentsSchedule/SearchByFilters";
 
 const Schedule = () => {
   const [loading, setLoading] = useState(false);

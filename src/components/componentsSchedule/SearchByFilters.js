@@ -7,7 +7,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
-import Icon from "@material-ui/core/Icon";
 import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +37,6 @@ const SearchByFilters = ({ onClick }) => {
         spacing={1}
         alignContent="center"
         justify="center"
-        alignItems="center"
         className={classes.searchGrid}
       >
         <Grid item xs="auto">
@@ -48,7 +46,7 @@ const SearchByFilters = ({ onClick }) => {
               label="Pesquisar"
               variant="outlined"
               color="secondary"
-              fullWidth="true"
+              fullWidth={true}
               justify="center"
             />
           </form>

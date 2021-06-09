@@ -1,10 +1,13 @@
 import React from "react";
+import Container from "@material-ui/core/Container";
+import Paper from "@material-ui/core/Typography";
+import Typography from "@material-ui/core/Typography";
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
 
 const MedicalRecord = () => {
   return (
-    <div className='css-provisorio'>
-     <h1>Prontuários</h1>
-    </div>
+     <Container></Container>   
   );
 };
 
