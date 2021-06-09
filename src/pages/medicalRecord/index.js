@@ -1,13 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Container from "@material-ui/core/Container";
-import Paper from "@material-ui/core/Typography";
-import Typography from "@material-ui/core/Typography";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
+import ClientMedicalRecord from "../../components/ClientMedicalRecord";
+import { getMedicalRecord } from "../../api/MedicalRecordApi";
 
 const MedicalRecord = () => {
+  const [setMedicalRecord] = useState([]);
+
+  useEffect(() => {
+    getMedicalRecord()
+      .then((response) => {
+        setMedicalRecord(response.data);
+      })
+      .catch((error) => {
+        console.error(
+          "Não foi possível encontrar informações no prontuário do paciente"
+        );
+      });
+  }, []);
+
   return (
-     <Container></Container>   
+    <Container>
+      medicalrecord.map((medicalrecord) 
+      <ClientMedicalRecord
+        key={medicalrecord.description}
+        appointment={medicalrecord}
+      />
+      
+    </Container>
   );
 };
 
