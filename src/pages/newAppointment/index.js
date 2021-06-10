@@ -9,8 +9,12 @@ import Grid from "@material-ui/core/Grid";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import Button from "@material-ui/core/Button";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
-import { getAppointments } from "../../api/AppointmentApi";
+import { getAppointments, createAppointment } from "../../api/AppointmentApi";
 import { getSpecialist } from "../../api/SpecialistApi";
 // import { getClients } from "../../api/ClientApi";
 
@@ -36,20 +40,34 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(5),
     marginRight: theme.spacing(5),
   },
-  buttonTest: {
+  button: {
     backgroundColor: "#D31C5B",
   },
+  snackbar: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
+
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
 
 const NewAppointment = ({ onClick }) => {
   const classes = useStyles();
 
-  const [clientName, setClientName] = useState();
+  const [clientNameId, setClientNameId] = useState();
   const [specialistId, setSpecialistId] = useState();
   const [date, setDate] = useState();
   const [time, setTime] = useState();
   const [price, setPrice] = useState();
   const [appointmentStatus, setAppointmentStatus] = useState("1");
+  const [clients, setClients] = useState([]);
+  const [specialistName, setSpecialistName] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // useEffect(() => {
   //   getClients()
@@ -60,7 +78,7 @@ const NewAppointment = ({ onClick }) => {
   //       console.error(error);
   //     });
   // }, []);
-  const [clients, setClients] = useState([]);
+
   useEffect(() => {
     getAppointments()
       .then((response) => {
@@ -71,7 +89,6 @@ const NewAppointment = ({ onClick }) => {
       });
   }, []);
 
-  const [specialistName, setSpecialistName] = useState([]);
   useEffect(() => {
     getSpecialist()
       .then((response) => {
@@ -82,6 +99,24 @@ const NewAppointment = ({ onClick }) => {
       });
   }, []);
 
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
+
+  const createAppointmentOnServer = () => {
+    setLoading(true);
+    createAppointment()
+      .then((response) => {
+        setOpen(true);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Algo deu errado no seu agendamento");
+      });
+  };
   return (
     <div className={classes.center}>
       <form className={classes.formControl} noValidate autoComplete="off">
@@ -89,6 +124,7 @@ const NewAppointment = ({ onClick }) => {
           <Autocomplete
             id="name"
             options={clients}
+            onChange={(e, value) => setClientNameId(value.id)}
             getOptionLabel={(option) => option.clientName}
             renderInput={(params) => (
               <TextField
@@ -99,8 +135,6 @@ const NewAppointment = ({ onClick }) => {
                 fullWidth={true}
                 justify="center"
                 className={classes.margin}
-                defaultValue={clientName}
-                onChange={(e) => setClientName(e.target.value)}
               />
             )}
           />
@@ -167,8 +201,16 @@ const NewAppointment = ({ onClick }) => {
                 className={classes.margin}
                 defaultValue={price}
                 onChange={(e) => setPrice(e.target.value)}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment>
+                      <AttachMoneyIcon style={{ fontSize: 15 }} />
+                    </InputAdornment>
+                  ),
+                }}
               />
             </Grid>
+
             <Grid item xs="auto">
               <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel id="filter">Status</InputLabel>
@@ -202,12 +244,26 @@ const NewAppointment = ({ onClick }) => {
               <Button
                 variant="contained"
                 color="primary"
-                className={classes.buttonTest}
+                className={classes.button}
                 startIcon={<ScheduleIcon />}
-                onClick={() => {}}
+                onClick={() => {
+                  createAppointmentOnServer();
+                }}
+                disabled={loading}
               >
                 Marcar Atendimento
               </Button>
+
+              <Snackbar
+                className={classes.snackbar}
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+              >
+                <Alert onClose={handleClose} severity="success">
+                  Seu atendimento foi marcado com sucesso!
+                </Alert>
+              </Snackbar>
             </Grid>
           </Grid>
         </div>
@@ -215,5 +271,4 @@ const NewAppointment = ({ onClick }) => {
     </div>
   );
 };
-
 export default NewAppointment;
