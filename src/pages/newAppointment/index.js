@@ -58,14 +58,14 @@ const Alert = (props) => {
 const NewAppointment = ({ onClick }) => {
   const classes = useStyles();
 
-  const [clientNameId, setClientNameId] = useState();
-  const [specialistId, setSpecialistId] = useState();
-  const [date, setDate] = useState();
-  const [time, setTime] = useState();
-  const [price, setPrice] = useState();
+  const [selectedClient, setSelectedClient] = useState(null);
+  const [selectedSpecialist, setSelectedSpecialist] = useState(null);
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [price, setPrice] = useState("");
   const [appointmentStatus, setAppointmentStatus] = useState("1");
   const [clients, setClients] = useState([]);
-  const [specialistName, setSpecialistName] = useState([]);
+  const [specialists, setSpecialists] = useState([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -92,7 +92,7 @@ const NewAppointment = ({ onClick }) => {
   useEffect(() => {
     getSpecialist()
       .then((response) => {
-        setSpecialistName(response.data);
+        setSpecialists(response.data);
       })
       .catch((error) => {
         console.error("Erro ao pegar os specialists.");
@@ -106,17 +106,25 @@ const NewAppointment = ({ onClick }) => {
     setOpen(false);
   };
 
+  const refreshPage = () => {
+    setTimeout(() => {
+      document.location.reload();
+    }, 1000);
+  };
+
   const createAppointmentOnServer = () => {
     setLoading(true);
     createAppointment()
       .then((response) => {
         setOpen(true);
         setLoading(false);
+        refreshPage();
       })
       .catch((error) => {
         console.error("Algo deu errado no seu agendamento");
       });
   };
+
   return (
     <div className={classes.center}>
       <form className={classes.formControl} noValidate autoComplete="off">
@@ -124,7 +132,7 @@ const NewAppointment = ({ onClick }) => {
           <Autocomplete
             id="name"
             options={clients}
-            onChange={(e, value) => setClientNameId(value.id)}
+            onChange={(e, value) => setSelectedClient(value.id)}
             getOptionLabel={(option) => option.clientName}
             renderInput={(params) => (
               <TextField
@@ -140,9 +148,9 @@ const NewAppointment = ({ onClick }) => {
           />
 
           <Autocomplete
-            id="specialist"
-            options={specialistName}
-            onChange={(e, value) => setSpecialistId(value.id)}
+            id="selectedSpecialist"
+            options={specialists}
+            onChange={(e, value) => setSelectedSpecialist(value.id)}
             getOptionLabel={(option) => option.name}
             renderInput={(params) => (
               <TextField
@@ -173,7 +181,7 @@ const NewAppointment = ({ onClick }) => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                defaultValue={date}
+                value={date}
                 onChange={(e) => setDate(e.target.value)}
               />
             </Grid>
