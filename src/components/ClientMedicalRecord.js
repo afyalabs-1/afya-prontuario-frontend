@@ -1,39 +1,74 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
-import Card from "@material-ui/core/Typography";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
+import { IoMdContact } from "react-icons/io";
+import Box from "@material-ui/core/Box";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+// import CircularIndeterminate from "../components/CircularInderteminate";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   root: {
-    flexGrow: 1,
+    minWidth: 275,
   },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: "justify",
+  bullet: {
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)",
   },
-}));
+  title: {
+    fontSize: 18,
+  },
+  pos: {
+    marginBottom: 12,
+  },
+});
 
 const ClientMedicalRecord = ({ medicalrecord }) => {
   const classes = useStyles();
 
   return (
     <Container>
-      <div className={classes.root}>
-        <Grid container spacing={3}>
-          <Grid item xs={4} sm={4}>
-            <Card className={classes.paper}>
-            <Typography>{medicalrecord.specialist}</Typography>
-            </Card>
+      <Box p={{ xs: 2, sm: 3, md: 4 }}>
+        <div className={classes.root}>
+          <Grid container spacing={3}>
+            <Grid item xs={2} sm={2}>
+              <IoMdContact
+                style={{ fontSize: 180, color: "#E5E5E5" }}
+              ></IoMdContact>
+            </Grid>
+            <Grid item xs={10} sm={10}>
+              <Typography variant="h4">{medicalrecord.paciente}</Typography>
+              <br />
+              <Card className={classes.root} variant="outlined">
+                <CardContent>
+                  <Typography
+                    className={classes.title}
+                    color="textSecondary"
+                    gutterBottom
+                  >
+                    {medicalrecord.name}
+                  </Typography>
+                  <Typography className={classes.pos} color="textSecondary">
+                    {medicalrecord.specialist} - {medicalrecord.date} -{" "}
+                    {medicalrecord.time}
+                    <br />
+                    {medicalrecord.description}
+                    <br />
+                    <br />
+                  </Typography>
+                </CardContent>
+              </Card>
+
+              {/* <CircularIndeterminate></CircularIndeterminate> */}
+
+            </Grid>
+           
           </Grid>
-          <Grid item xs={8} sm={8}>
-            <Card className={classes.paper}>
-              <Typography>Fellipe Henrique Fernandes Andrade</Typography>
-            </Card>
-          </Grid>
-        </Grid>
-      </div>
+        </div>
+      </Box>
     </Container>
   );
 };

@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Box from "@material-ui/core/Box";
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,8 +17,10 @@ export default function CircularIndeterminate() {
 
   return (
     <div className={classes.root}>
-      <CircularProgress />
-      <CircularProgress color="secondary" />
+      <Box>
+        <CircularProgress />
+      </Box>
+      
     </div>
   );
 }

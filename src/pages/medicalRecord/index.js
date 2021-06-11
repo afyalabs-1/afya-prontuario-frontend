@@ -4,7 +4,7 @@ import ClientMedicalRecord from "../../components/ClientMedicalRecord";
 import { getMedicalRecord } from "../../api/MedicalRecordApi";
 
 const MedicalRecord = () => {
-  const [setMedicalRecord] = useState([]);
+  const [medicalrecords, setMedicalRecord] = useState([]);
 
   useEffect(() => {
     getMedicalRecord()
@@ -20,12 +20,13 @@ const MedicalRecord = () => {
 
   return (
     <Container>
-      medicalrecord.map((medicalrecord) 
-      <ClientMedicalRecord
-        key={medicalrecord.description}
-        appointment={medicalrecord}
-      />
-      
+      {medicalrecords.map((medicalrecord) => (
+        <ClientMedicalRecord
+          key={medicalrecord.id}
+          medicalrecord={medicalrecord}
+        />
+      ))}
+    
     </Container>
   );
 };
