@@ -13,20 +13,11 @@ import EditIcon from "@material-ui/icons/Edit";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minWidth: 275,
     marginBottom: 8,
+    marginRight: 20,
+    marginLeft: 20,
   },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
-  large: {
+  largeAvatar: {
     width: theme.spacing(8),
     height: theme.spacing(8),
   },
@@ -36,47 +27,49 @@ const AppointmentCard = ({ appointment }) => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root} variant="outlined">
-      <CardContent>
-        <Grid container spacing={4}>
-          <Grid item xs={3} alignItems="center">
-            <Typography variant="subtitle2" alignJustify bold>
-              {appointment.date}
-            </Typography>
-            <Typography variant="body1" alignJustify component="p">
-              {appointment.time}
-            </Typography>
+    <div className={classes.root}>
+      <Card variant="outlined">
+        <CardContent className={classes.root}>
+          <Grid container spacing={4}>
+            <Grid item xs={3} alignItems="center">
+              <Typography variant="subtitle2" alignJustify bold>
+                {appointment.date}
+              </Typography>
+              <Typography variant="body1" alignJustify component="p">
+                {appointment.time}
+              </Typography>
+            </Grid>
+            <Grid item xs={3} alignItems="center">
+              <Typography gutterBottom variant="subtitle1">
+                {appointment.clientName}
+              </Typography>
+              <Avatar
+                alt={appointment.clientName}
+                src={appointment.photo}
+                className={classes.largeAvatar}
+              />
+            </Grid>
+            <Grid item xs={3}>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Especialista: {appointment.specialist}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Valor: R$:{appointment.price}
+              </Typography>
+            </Grid>
+            <Grid item xs={3} alignItems="center">
+              <Typography paragraph>Status do Atendimento: Agendado</Typography>
+              <IconButton aria-label="edit">
+                <EditIcon />
+              </IconButton>
+              <Button variant="contained" color="primary">
+                Prontuário
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item xs={3} alignItems="center">
-            <Typography gutterBottom variant="subtitle1">
-              {appointment.clientName}
-            </Typography>
-            <Avatar
-              alt={appointment.clientName}
-              src={appointment.photo}
-              className={classes.large}
-            />
-          </Grid>
-          <Grid item xs={3}>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Especialista: {appointment.specialist}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Valor: R$:{appointment.price}
-            </Typography>
-          </Grid>
-          <Grid item xs={3} alignItems="center">
-            <Typography paragraph>Status do Atendimento: Agendado</Typography>
-            <IconButton aria-label="edit">
-              <EditIcon />
-            </IconButton>
-            <Button variant="contained" color="primary">
-              Prontuário
-            </Button>
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
