@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -15,22 +15,28 @@ const useStyles = makeStyles((theme) => ({
 
 const Customer = () => {
   const classes = useStyles();
+  const [clients, setClients] = useState([]);
 
-  // useEffect(() => {
-  //   getClients()
-  //     .then((response) => {
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Erro na requisição dos clientes");
-  //     });
-  // }, []);
+  useEffect(() => {
+    getClients()
+      .then((response) => {
+        setClients(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro na requisição dos clientes");
+      });
+  }, []);
 
   return (
     <div className={classes.root}>
       <List>
         <ListItem variant="outlined">
-          <Typography>Teste</Typography>
+          {clients.map((client) => (
+            <Typography key={client.id} client={client}>
+              {client.name}
+            </Typography>
+          ))}
         </ListItem>
       </List>
     </div>
