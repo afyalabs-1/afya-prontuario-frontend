@@ -11,6 +11,10 @@ body {
   background-color: #fafafa;
 }
 
+a {
+  text-decoration: none;
+}
+
 .css-provisorio {
   display: flex;
   height: 80vh;
