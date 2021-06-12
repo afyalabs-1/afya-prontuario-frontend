@@ -8,6 +8,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import Container from "@material-ui/core/Container";
+import Navbar from "../../components/Navbar";
 
 import { createClient as createClientApi } from "../../api/ClientApi";
 
@@ -61,212 +63,217 @@ const CustomerRegistration = () => {
   };
 
   return (
-    <div className={classes.marginBox}>
-      <form>
-        <TextField
-          id="clientName"
-          label="Nome Completo"
-          variant="outlined"
-          color="secondary"
-          fullWidth={true}
-          className={classes.marginBottomField}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6}>
+    <div>
+      <Navbar />
+      <Container>
+        <div className={classes.marginBox}>
+          <form>
             <TextField
-              id="phone"
-              label="Telefone"
+              id="clientName"
+              label="Nome Completo"
               variant="outlined"
               color="secondary"
               fullWidth={true}
               className={classes.marginBottomField}
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              id="celphone"
-              label="Celular"
-              variant="outlined"
-              color="secondary"
-              fullWidth={true}
-              className={classes.marginBottomField}
-              value={cel}
-              onChange={(e) => setCel(e.target.value)}
-            />
-          </Grid>
-        </Grid>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={6}>
+                <TextField
+                  id="phone"
+                  label="Telefone"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="celphone"
+                  label="Celular"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                  value={cel}
+                  onChange={(e) => setCel(e.target.value)}
+                />
+              </Grid>
+            </Grid>
 
-        <Grid container spacing={2} alignItems="center">
-          <Grid item xs={6}>
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs={6}>
+                <TextField
+                  id="cpf"
+                  label="CPF"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                  value={cpf}
+                  onChange={(e) => setCpf(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="email"
+                  label="Email"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+            <Grid container spacing={3} alignItems="center" justify="center">
+              <Grid item xs={4}>
+                <FormControl
+                  variant="outlined"
+                  fullWidth={true}
+                  className={classes.formControl}
+                >
+                  <InputLabel id="gender">Gênero</InputLabel>
+                  <Select
+                    labelId="select-gender"
+                    id="gender"
+                    label="gender"
+                    justify="center"
+                    color="secondary"
+                    className={classes.marginBottomField}
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                  >
+                    <MenuItem value={"FEMALE"}>Feminino</MenuItem>
+                    <MenuItem value={"MALE"}>Masculino</MenuItem>
+                    <MenuItem value={"OTHER"}>Outros</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  id="birthDate"
+                  label="Data de Nascimento"
+                  type="date"
+                  variant="outlined"
+                  color="secondary"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  value={birthDate}
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                  onChange={(e) => setBirthDate(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <FormControl
+                  variant="outlined"
+                  fullWidth={true}
+                  className={classes.formControl}
+                >
+                  <InputLabel id="Tipo Sanguíneo">Tipo sanguíneo</InputLabel>
+                  <Select
+                    id="bloodType"
+                    label="Tipo sanguíneo"
+                    justify="center"
+                    color="secondary"
+                    className={classes.marginBottomField}
+                    value={bloodType}
+                    onChange={(e) => setBloodType(e.target.value)}
+                  >
+                    <MenuItem value={"A_POSITIVE"}>A+</MenuItem>
+                    <MenuItem value={"A_NEGATIVE"}>A-</MenuItem>
+                    <MenuItem value={"B_POSITIVE"}>B+</MenuItem>
+                    <MenuItem value={"B_NEGATIVE"}>B-</MenuItem>
+                    <MenuItem value={"O_POSITIVE"}>O+</MenuItem>
+                    <MenuItem value={"O_NEGATIVE"}>O-</MenuItem>
+                    <MenuItem value={"AB_POSITIVE"}>AB+</MenuItem>
+                    <MenuItem value={"AB_NEGATIVE"}>AB+</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+            </Grid>
+            <Grid container spacing={3} alignItems="center">
+              <Grid item xs={4}>
+                <TextField
+                  id="cep"
+                  label="CEP"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  id="state"
+                  label="Estado"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  id="city"
+                  label="Cidade"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                />
+              </Grid>
+            </Grid>
             <TextField
-              id="cpf"
-              label="CPF"
+              id="district"
+              label="Bairro"
               variant="outlined"
               color="secondary"
               fullWidth={true}
               className={classes.marginBottomField}
-              value={cpf}
-              onChange={(e) => setCpf(e.target.value)}
             />
-          </Grid>
-          <Grid item xs={6}>
             <TextField
-              id="email"
-              label="Email"
-              variant="outlined"
-              color="secondary"
-              fullWidth={true}
-              className={classes.marginBottomField}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Grid>
-        </Grid>
-        <Grid container spacing={3} alignItems="center" justify="center">
-          <Grid item xs={4}>
-            <FormControl
-              variant="outlined"
-              fullWidth={true}
-              className={classes.formControl}
-            >
-              <InputLabel id="gender">Gênero</InputLabel>
-              <Select
-                labelId="select-gender"
-                id="gender"
-                label="gender"
-                justify="center"
-                color="secondary"
-                className={classes.marginBottomField}
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-              >
-                <MenuItem value={"FEMALE"}>Feminino</MenuItem>
-                <MenuItem value={"MALE"}>Masculino</MenuItem>
-                <MenuItem value={"OTHER"}>Outros</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={4}>
-            <TextField
-              id="birthDate"
-              label="Data de Nascimento"
-              type="date"
-              variant="outlined"
-              color="secondary"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              value={birthDate}
-              fullWidth={true}
-              className={classes.marginBottomField}
-              onChange={(e) => setBirthDate(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <FormControl
-              variant="outlined"
-              fullWidth={true}
-              className={classes.formControl}
-            >
-              <InputLabel id="Tipo Sanguíneo">Tipo sanguíneo</InputLabel>
-              <Select
-                id="bloodType"
-                label="Tipo sanguíneo"
-                justify="center"
-                color="secondary"
-                className={classes.marginBottomField}
-                value={bloodType}
-                onChange={(e) => setBloodType(e.target.value)}
-              >
-                <MenuItem value={"A_POSITIVE"}>A+</MenuItem>
-                <MenuItem value={"A_NEGATIVE"}>A-</MenuItem>
-                <MenuItem value={"B_POSITIVE"}>B+</MenuItem>
-                <MenuItem value={"B_NEGATIVE"}>B-</MenuItem>
-                <MenuItem value={"O_POSITIVE"}>O+</MenuItem>
-                <MenuItem value={"O_NEGATIVE"}>O-</MenuItem>
-                <MenuItem value={"AB_POSITIVE"}>AB+</MenuItem>
-                <MenuItem value={"AB_NEGATIVE"}>AB+</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Grid container spacing={3} alignItems="center">
-          <Grid item xs={4}>
-            <TextField
-              id="cep"
-              label="CEP"
+              id="adress"
+              label="Endereço"
               variant="outlined"
               color="secondary"
               fullWidth={true}
               className={classes.marginBottomField}
             />
-          </Grid>
-          <Grid item xs={4}>
             <TextField
-              id="state"
-              label="Estado"
+              id="avatar"
+              label="Imagem de Perfil (URL)"
               variant="outlined"
               color="secondary"
               fullWidth={true}
               className={classes.marginBottomField}
+              value={avatar}
+              onChange={(e) => setAvatar(e.target.value)}
             />
-          </Grid>
-          <Grid item xs={4}>
-            <TextField
-              id="city"
-              label="Cidade"
-              variant="outlined"
-              color="secondary"
-              fullWidth={true}
-              className={classes.marginBottomField}
-            />
-          </Grid>
-        </Grid>
-        <TextField
-          id="district"
-          label="Bairro"
-          variant="outlined"
-          color="secondary"
-          fullWidth={true}
-          className={classes.marginBottomField}
-        />
-        <TextField
-          id="adress"
-          label="Endereço"
-          variant="outlined"
-          color="secondary"
-          fullWidth={true}
-          className={classes.marginBottomField}
-        />
-        <TextField
-          id="avatar"
-          label="Imagem de Perfil (URL)"
-          variant="outlined"
-          color="secondary"
-          fullWidth={true}
-          className={classes.marginBottomField}
-          value={avatar}
-          onChange={(e) => setAvatar(e.target.value)}
-        />
-        <Grid container alignItems="center">
-          <Grid item xs={12}>
-            <Button
-              variant="contained"
-              color="secondary"
-              startIcon={<SaveIcon />}
-              onClick={() => {
-                createClient();
-              }}
-            >
-              Salvar
-            </Button>
-          </Grid>
-        </Grid>
-      </form>
+            <Grid container alignItems="center">
+              <Grid item xs={12}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  startIcon={<SaveIcon />}
+                  onClick={() => {
+                    createClient();
+                  }}
+                >
+                  Salvar
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+      </Container>
     </div>
   );
 };
