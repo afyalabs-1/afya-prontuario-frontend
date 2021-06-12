@@ -23,12 +23,12 @@ export const SidebarData = [
     icon: <BsIcons.BsPersonCheckFill />,
     cName: 'nav-text'
   },
-  {
-    title: 'Prontuários',
-    path: '/medicalRecord',
-    icon: <IoIcons.IoMdDocument />,
-    cName: 'nav-text'
-  },
+  // {
+  //   title: 'Prontuários',
+  //   path: '/medicalRecord',
+  //   icon: <IoIcons.IoMdDocument />,
+  //   cName: 'nav-text'
+  // },
   {
     title: 'Novo Atendimento',
     path: '/newAppointment',
