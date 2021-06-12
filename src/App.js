@@ -1,6 +1,7 @@
-import React from 'react';
-import './App.css';
+import React, { createContext, useContext } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+//Páginas
 import Customer from './pages/customer/index';
 import CustomerRegistration from './pages/customerRegistration/index';
 import Dashboard from './pages/dashboard/index';
@@ -10,8 +11,9 @@ import NewAppointment from "./pages/newAppointment/index";
 import Schedule from "./pages/schedule/index";
 import Specialist from "./pages/specialist/index";
 
+//Estilização
+import './App.css';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-
 
 const theme = createMuiTheme({
     palette: {
@@ -20,6 +22,8 @@ const theme = createMuiTheme({
       }
     }
   });
+
+const Context = createContext();
 
 function App() {
   return (
