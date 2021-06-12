@@ -1,7 +1,7 @@
 export const medicalrecords = [
   {
     id: 1,
-    paciente: "Melissa Augusto Ribeiro",
+    paciente: "Fellipe Henrique",
     name: "Consulta Endocrinologista",
     specialist: "Dr. Rudy",
     description:

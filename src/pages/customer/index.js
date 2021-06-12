@@ -7,6 +7,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import { Link } from "react-router-dom";
+import Container from "@material-ui/core/Container";
+import Navbar from "../../components/Navbar";
 
 import { getClients } from "../../api/ClientApi";
 
@@ -42,6 +44,8 @@ const Customer = () => {
 
   return (
     <div>
+    <Navbar />
+    <Container>
       <div className={classes.marginBox}>
         <List className={classes.root}>
           {clients.map((client) => (
@@ -66,6 +70,7 @@ const Customer = () => {
           ))}
         </List>
       </div>
+      </Container>
     </div>
   );
 };

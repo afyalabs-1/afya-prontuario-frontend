@@ -14,6 +14,9 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
+import Container from "@material-ui/core/Container";
+import Navbar from "../../components/Navbar";
+
 import { getAppointments, createAppointment } from "../../api/AppointmentApi";
 import { getSpecialist } from "../../api/SpecialistApi";
 // import { getClients } from "../../api/ClientApi";
@@ -126,156 +129,163 @@ const NewAppointment = ({ onClick }) => {
   };
 
   return (
-    <div className={classes.center}>
-      <form className={classes.formControl} noValidate autoComplete="off">
-        <div>
-          <Autocomplete
-            id="name"
-            options={clients}
-            onChange={(e, value) => setSelectedClient(value.id)}
-            getOptionLabel={(option) => option.clientName}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Nome do Cliente"
-                variant="outlined"
-                color="secondary"
-                fullWidth={true}
+    <div>
+      <Navbar />
+      <Container>
+        <div className={classes.center}>
+          <form className={classes.formControl} noValidate autoComplete="off">
+            <div>
+              <Autocomplete
+                id="name"
+                options={clients}
+                onChange={(e, value) => setSelectedClient(value.id)}
+                getOptionLabel={(option) => option.clientName}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Nome do Cliente"
+                    variant="outlined"
+                    color="secondary"
+                    fullWidth={true}
+                    justify="center"
+                    className={classes.margin}
+                  />
+                )}
+              />
+              <Autocomplete
+                id="selectedSpecialist"
+                options={specialists}
+                onChange={(e, value) => setSelectedSpecialist(value.id)}
+                getOptionLabel={(option) => option.name}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Especialista"
+                    variant="outlined"
+                    color="secondary"
+                    fullWidth={true}
+                    justify="center"
+                    className={classes.margin}
+                  />
+                )}
+              />
+              <Grid
+                container
+                spacing={10}
+                alignContent="center"
                 justify="center"
-                className={classes.margin}
-              />
-            )}
-          />
-
-          <Autocomplete
-            id="selectedSpecialist"
-            options={specialists}
-            onChange={(e, value) => setSelectedSpecialist(value.id)}
-            getOptionLabel={(option) => option.name}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Especialista"
-                variant="outlined"
-                color="secondary"
-                fullWidth={true}
-                justify="center"
-                className={classes.margin}
-              />
-            )}
-          />
-          <Grid
-            container
-            spacing={10}
-            alignContent="center"
-            justify="center"
-            alignItems="center"
-            className={classes.searchGrid}
-          >
-            <Grid item xs="auto">
-              <TextField
-                id="date"
-                label="Dia"
-                type="date"
-                className={classes.margin}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs="auto">
-              <TextField
-                id="time"
-                label="Hora"
-                type="time"
-                className={classes.margin}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-                defaultValue={time}
-                onChange={(e) => setTime(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs="auto">
-              <TextField
-                id="price"
-                label="Valor"
-                variant="outlined"
-                color="secondary"
-                fullWidth={true}
-                justify="center"
-                className={classes.margin}
-                defaultValue={price}
-                onChange={(e) => setPrice(e.target.value)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment>
-                      <AttachMoneyIcon style={{ fontSize: 15 }} />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-
-            <Grid item xs="auto">
-              <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel id="filter">Status</InputLabel>
-                <Select
-                  labelId="select-status"
-                  id="appointment-status"
-                  label="status"
-                  color="secondary"
-                  justify="center"
-                  className={classes.margin}
-                  value={appointmentStatus}
-                  onChange={(e) => setAppointmentStatus(e.target.value)}
-                >
-                  <MenuItem value={1}>Agendado</MenuItem>
-                  <MenuItem value={2}>Realizado</MenuItem>
-                  <MenuItem value={3}>Cancelado</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-
-          <Grid
-            container
-            spacing={10}
-            alignContent="center"
-            justify="center"
-            alignItems="center"
-            className={classes.searchGrid}
-          >
-            <Grid item xs="auto">
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                startIcon={<ScheduleIcon />}
-                onClick={() => {
-                  createAppointmentOnServer();
-                }}
-                disabled={loading}
+                alignItems="center"
+                className={classes.searchGrid}
               >
-                Marcar Atendimento
-              </Button>
+                <Grid item xs="auto">
+                  <TextField
+                    id="date"
+                    label="Dia"
+                    type="date"
+                    className={classes.margin}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs="auto">
+                  <TextField
+                    id="time"
+                    label="Hora"
+                    type="time"
+                    className={classes.margin}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    defaultValue={time}
+                    onChange={(e) => setTime(e.target.value)}
+                  />
+                </Grid>
+                <Grid item xs="auto">
+                  <TextField
+                    id="price"
+                    label="Valor"
+                    variant="outlined"
+                    color="secondary"
+                    fullWidth={true}
+                    justify="center"
+                    className={classes.margin}
+                    defaultValue={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment>
+                          <AttachMoneyIcon style={{ fontSize: 15 }} />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
 
-              <Snackbar
-                className={classes.snackbar}
-                open={open}
-                autoHideDuration={6000}
-                onClose={handleClose}
+                <Grid item xs="auto">
+                  <FormControl
+                    variant="outlined"
+                    className={classes.formControl}
+                  >
+                    <InputLabel id="filter">Status</InputLabel>
+                    <Select
+                      labelId="select-status"
+                      id="appointment-status"
+                      label="status"
+                      color="secondary"
+                      justify="center"
+                      className={classes.margin}
+                      value={appointmentStatus}
+                      onChange={(e) => setAppointmentStatus(e.target.value)}
+                    >
+                      <MenuItem value={1}>Agendado</MenuItem>
+                      <MenuItem value={2}>Realizado</MenuItem>
+                      <MenuItem value={3}>Cancelado</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+              </Grid>
+
+              <Grid
+                container
+                spacing={10}
+                alignContent="center"
+                justify="center"
+                alignItems="center"
+                className={classes.searchGrid}
               >
-                <Alert onClose={handleClose} severity="success">
-                  Seu atendimento foi marcado com sucesso!
-                </Alert>
-              </Snackbar>
-            </Grid>
-          </Grid>
+                <Grid item xs="auto">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.button}
+                    startIcon={<ScheduleIcon />}
+                    onClick={() => {
+                      createAppointmentOnServer();
+                    }}
+                    disabled={loading}
+                  >
+                    Marcar Atendimento
+                  </Button>
+
+                  <Snackbar
+                    className={classes.snackbar}
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                  >
+                    <Alert onClose={handleClose} severity="success">
+                      Seu atendimento foi marcado com sucesso!
+                    </Alert>
+                  </Snackbar>
+                </Grid>
+              </Grid>
+            </div>
+          </form>
         </div>
-      </form>
+      </Container>
     </div>
   );
 };
