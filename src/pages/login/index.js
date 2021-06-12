@@ -1,4 +1,7 @@
-import React from "react";
+import React, {useContext} from "react";
+import { Context } from "../../contexts/AuthContext"
+
+
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -23,9 +26,9 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
+     
         Team #1 - O time que a Afya Gama!
-      </Link>{" "}
+      {" "}
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -67,6 +70,9 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
   const classes = useStyles();
+  const { authenticated, handleLogin } = useContext(Context);
+
+  console.debug('login', authenticated);
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -105,11 +111,12 @@ export default function Login() {
             />
 
             <Button
-              type="submit"
+             
               fullWidth
               variant="contained"
               color="primary"
-              className={classes.submit}
+              
+              onClick={handleLogin}
             >
               Entrar
             </Button>
