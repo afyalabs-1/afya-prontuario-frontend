@@ -9,6 +9,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
+import { createClient as createClientApi } from "../../api/ClientApi";
+
 const useStyles = makeStyles((theme) => ({
   marginBox: {
     marginTop: 20,
@@ -27,7 +29,36 @@ const useStyles = makeStyles((theme) => ({
 
 const CustomerRegistration = () => {
   const classes = useStyles();
-  const [gender, setGender] = useState();
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [cel, setCel] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [bloodType, setBloodType] = useState("");
+  const [avatar, setAvatar] = useState("");
+
+  const createClient = () => {
+    const clientData = {
+      cpf: cpf,
+      name: name,
+      email: email,
+      phoneNumber: phone,
+      cellPhone: cel,
+      birthDate: birthDate,
+      gender: gender,
+      bloodType: bloodType,
+      profilePictureUrl: avatar,
+    };
+    createClientApi(clientData)
+      .then((response) => {
+        console.log("Cliente criado com sucesso!");
+      })
+      .catch((error) => {
+        console.error("Algo deu errado na criação do cliente");
+      });
+  };
 
   return (
     <div className={classes.marginBox}>
@@ -39,6 +70,8 @@ const CustomerRegistration = () => {
           color="secondary"
           fullWidth={true}
           className={classes.marginBottomField}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <Grid container spacing={2} alignItems="center">
           <Grid item xs={6}>
@@ -49,6 +82,8 @@ const CustomerRegistration = () => {
               color="secondary"
               fullWidth={true}
               className={classes.marginBottomField}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
           </Grid>
           <Grid item xs={6}>
@@ -59,6 +94,8 @@ const CustomerRegistration = () => {
               color="secondary"
               fullWidth={true}
               className={classes.marginBottomField}
+              value={cel}
+              onChange={(e) => setCel(e.target.value)}
             />
           </Grid>
         </Grid>
@@ -67,11 +104,13 @@ const CustomerRegistration = () => {
           <Grid item xs={6}>
             <TextField
               id="cpf"
-              label="Cpf"
+              label="CPF"
               variant="outlined"
               color="secondary"
               fullWidth={true}
               className={classes.marginBottomField}
+              value={cpf}
+              onChange={(e) => setCpf(e.target.value)}
             />
           </Grid>
           <Grid item xs={6}>
@@ -82,12 +121,18 @@ const CustomerRegistration = () => {
               color="secondary"
               fullWidth={true}
               className={classes.marginBottomField}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Grid>
         </Grid>
-        <Grid container spacing={3} alignItems="center">
+        <Grid container spacing={3} alignItems="center" justify="center">
           <Grid item xs={4}>
-            <FormControl variant="outlined" className={classes.formControl}>
+            <FormControl
+              variant="outlined"
+              fullWidth={true}
+              className={classes.formControl}
+            >
               <InputLabel id="gender">Gênero</InputLabel>
               <Select
                 labelId="select-gender"
@@ -95,14 +140,13 @@ const CustomerRegistration = () => {
                 label="gender"
                 justify="center"
                 color="secondary"
-                autoWidth={false}
                 className={classes.marginBottomField}
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
               >
-                <MenuItem value={1}>Feminino</MenuItem>
-                <MenuItem value={2}>Masculino</MenuItem>
-                <MenuItem value={3}>Indefinido</MenuItem>
+                <MenuItem value={"FEMALE"}>Feminino</MenuItem>
+                <MenuItem value={"MALE"}>Masculino</MenuItem>
+                <MenuItem value={"OTHER"}>Outros</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -110,21 +154,44 @@ const CustomerRegistration = () => {
             <TextField
               id="birthDate"
               label="Data de Nascimento"
+              type="date"
               variant="outlined"
               color="secondary"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={birthDate}
               fullWidth={true}
               className={classes.marginBottomField}
+              onChange={(e) => setBirthDate(e.target.value)}
             />
           </Grid>
           <Grid item xs={4}>
-            <TextField
-              id="bloodType"
-              label="Tipo sanguíneo"
+            <FormControl
               variant="outlined"
-              color="secondary"
               fullWidth={true}
-              className={classes.marginBottomField}
-            />
+              className={classes.formControl}
+            >
+              <InputLabel id="Tipo Sanguíneo">Tipo sanguíneo</InputLabel>
+              <Select
+                id="bloodType"
+                label="Tipo sanguíneo"
+                justify="center"
+                color="secondary"
+                className={classes.marginBottomField}
+                value={bloodType}
+                onChange={(e) => setBloodType(e.target.value)}
+              >
+                <MenuItem value={"A_POSITIVE"}>A+</MenuItem>
+                <MenuItem value={"A_NEGATIVE"}>A-</MenuItem>
+                <MenuItem value={"B_POSITIVE"}>B+</MenuItem>
+                <MenuItem value={"B_NEGATIVE"}>B-</MenuItem>
+                <MenuItem value={"O_POSITIVE"}>O+</MenuItem>
+                <MenuItem value={"O_NEGATIVE"}>O-</MenuItem>
+                <MenuItem value={"AB_POSITIVE"}>AB+</MenuItem>
+                <MenuItem value={"AB_NEGATIVE"}>AB+</MenuItem>
+              </Select>
+            </FormControl>
           </Grid>
         </Grid>
         <Grid container spacing={3} alignItems="center">
@@ -175,13 +242,25 @@ const CustomerRegistration = () => {
           fullWidth={true}
           className={classes.marginBottomField}
         />
-
+        <TextField
+          id="avatar"
+          label="Imagem de Perfil (URL)"
+          variant="outlined"
+          color="secondary"
+          fullWidth={true}
+          className={classes.marginBottomField}
+          value={avatar}
+          onChange={(e) => setAvatar(e.target.value)}
+        />
         <Grid container alignItems="center">
           <Grid item xs={12}>
             <Button
               variant="contained"
               color="secondary"
               startIcon={<SaveIcon />}
+              onClick={() => {
+                createClient();
+              }}
             >
               Salvar
             </Button>
