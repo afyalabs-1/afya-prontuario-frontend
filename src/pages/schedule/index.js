@@ -4,6 +4,9 @@ import AppointmentCard from "../../components/componentsSchedule/AppointmentCard
 import Loading from "../../components/Loading";
 import SearchByFilters from "../../components/componentsSchedule/SearchByFilters";
 
+import Container from "@material-ui/core/Container";
+import Navbar from "../../components/Navbar";
+
 import {
   getAppointments,
   getAppointmentsByClientName,
@@ -39,6 +42,8 @@ const Schedule = () => {
 
   return (
     <div>
+      <Navbar />
+      <Container>
       <SearchByFilters onClick={() => getFilteredAppointments()} />
       {loading ? (
         <Loading />
@@ -47,6 +52,7 @@ const Schedule = () => {
           <AppointmentCard key={appointment.id} appointment={appointment} />
         ))
       )}
+      </Container>
     </div>
   );
 };

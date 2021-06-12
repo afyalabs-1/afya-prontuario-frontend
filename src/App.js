@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Navbar from './components/Navbar';
 
 import Customer from './pages/customer/index';
 import CustomerRegistration from './pages/customerRegistration/index';
@@ -16,7 +15,6 @@ import Specialist from "./pages/specialist/index";
 function App() {
   return (
       <Router>
-        <Navbar />
         <Switch>
           <Route path='/' exact component={Dashboard} />
           <Route path='/login' component={Login} />
