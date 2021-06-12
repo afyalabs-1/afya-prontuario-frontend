@@ -1,9 +1,6 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-import Navbar from './components/Navbar';
-
 import Customer from './pages/customer/index';
 import CustomerRegistration from './pages/customerRegistration/index';
 import Dashboard from './pages/dashboard/index';
@@ -13,10 +10,22 @@ import NewAppointment from "./pages/newAppointment/index";
 import Schedule from "./pages/schedule/index";
 import Specialist from "./pages/specialist/index";
 
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+
+const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#D31C5B'
+      }
+    }
+  });
+
 function App() {
   return (
+   
+    <ThemeProvider theme={theme}>
       <Router>
-        <Navbar />
         <Switch>
           <Route path='/' exact component={Dashboard} />
           <Route path='/login' component={Login} />
@@ -28,6 +37,8 @@ function App() {
           <Route path='/specialist' component={Specialist} />
         </Switch>
       </Router>
+      </ThemeProvider>
+      
   );
 }
 

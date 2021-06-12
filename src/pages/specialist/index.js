@@ -1,9 +1,14 @@
 import React from "react";
+import Container from "@material-ui/core/Container";
+import Navbar from "../../components/Navbar";
 
 const Specialist = () => {
   return (
-    <div className='css-provisorio'>
-      <h1>Especialistas</h1>
+    <div>
+      <Navbar />
+      <Container>
+        <h1>Especialistas</h1>
+      </Container>
     </div>
   );
 };
