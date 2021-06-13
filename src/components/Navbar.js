@@ -7,7 +7,7 @@ import { SidebarData } from "./SidebarData";
 import "./Navbar.css";
 import { IconContext } from "react-icons";
 
-function Navbar() {
+function Navbar({ title }) {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
@@ -18,6 +18,7 @@ function Navbar() {
         <Link to="#" className="menu-bars">
           <FaIcons.FaBars onClick={showSidebar} />
         </Link>
+        <h2 className="nav-bar-title">{title}</h2>
         <Link to="#" className="menu-bars">
           <RiIcons.RiLogoutCircleRLine />
         </Link>

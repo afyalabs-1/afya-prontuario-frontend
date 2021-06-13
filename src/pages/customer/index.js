@@ -44,32 +44,32 @@ const Customer = () => {
 
   return (
     <div>
-    <Navbar />
-    <Container>
-      <div className={classes.marginBox}>
-        <List className={classes.root}>
-          {clients.map((client) => (
-            <ListItem variant="outlined" key={client.id} client={client}>
-              <Grid container spacing={3} alignItems="center">
-                <Grid item xs={1}>
-                  <Avatar alt="Foto" src={client.profilePictureUrl} />
+      <Navbar title="Clientes" />
+      <Container>
+        <div className={classes.marginBox}>
+          <List className={classes.root}>
+            {clients.map((client) => (
+              <ListItem variant="outlined" key={client.id} client={client}>
+                <Grid container spacing={3} alignItems="center">
+                  <Grid item xs={1}>
+                    <Avatar alt="Foto" src={client.profilePictureUrl} />
+                  </Grid>
+                  <Grid item xs>
+                    <Typography
+                      onClick={() => console.log("Hello")}
+                      className={classes.cursorPointer}
+                    >
+                      {client.name}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={3} justify="flex-end">
+                    <Button component={linkMedicalRecord}>+ Prontuário</Button>
+                  </Grid>
                 </Grid>
-                <Grid item xs>
-                  <Typography
-                    onClick={() => console.log("Hello")}
-                    className={classes.cursorPointer}
-                  >
-                    {client.name}
-                  </Typography>
-                </Grid>
-                <Grid item xs={3} justify="flex-end">
-                  <Button component={linkMedicalRecord}>+ Prontuário</Button>
-                </Grid>
-              </Grid>
-            </ListItem>
-          ))}
-        </List>
-      </div>
+              </ListItem>
+            ))}
+          </List>
+        </div>
       </Container>
     </div>
   );

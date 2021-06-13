@@ -5,7 +5,7 @@ import Navbar from "../../components/Navbar";
 const Specialist = () => {
   return (
     <div>
-      <Navbar />
+      <Navbar title="Especialistas" />
       <Container>
         <h1>Especialistas</h1>
       </Container>
