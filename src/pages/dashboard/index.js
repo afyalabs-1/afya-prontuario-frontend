@@ -8,7 +8,7 @@ import Navbar from "../../components/Navbar";
 function Dashboard() {
   return (
     <div>
-      <Navbar />
+      <Navbar title="Dashboard" />
       <Container maxWidth="lg">
         <Grid container spacing={3}>
           <Grid item xs={12}>

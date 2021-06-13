@@ -21,7 +21,7 @@ const MedicalRecord = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar title="Prontuário" />
       <Container>
         {medicalrecords.map((medicalrecord) => (
           <ClientMedicalRecord

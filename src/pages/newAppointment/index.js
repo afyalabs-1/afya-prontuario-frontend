@@ -130,7 +130,7 @@ const NewAppointment = ({ onClick }) => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar title="Novo agendamento" />
       <Container>
         <div className={classes.center}>
           <form className={classes.formControl} noValidate autoComplete="off">
