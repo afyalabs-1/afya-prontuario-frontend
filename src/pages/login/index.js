@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
   },
   image: {
-    backgroundImage: "url(https://i.imgur.com/b5Mxv8x.png)",
+    backgroundImage: "url(https://i.imgur.com/MPYCXoY.png)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
@@ -81,10 +81,13 @@ export default function Login() {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
+            <LockOutlinedIcon/>
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Entrar no sistema
+          <Typography variant="h3">
+          AfyaGama
+          </Typography>
+          <Typography textAlign="center">
+          Sistema de agendamento para clínicas e consultórios
           </Typography>
           <form className={classes.form} noValidate>
             <TextField

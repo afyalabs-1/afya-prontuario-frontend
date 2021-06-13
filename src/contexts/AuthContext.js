@@ -11,10 +11,10 @@ function AuthProvider({ children }) {
   useEffect(() => {
     const token = localStorage.getItem("token");
 
-    if (token) {
-      LoginRouter.defaults.headers.Authorization = `Bearer ${token}`;
-      setAuthenticated(true);
-    }
+    // if (token) {
+    //   LoginRouter.defaults.headers.Authorization = `Bearer ${token}`;
+    //   setAuthenticated(true);
+    // }
   },[]);
 
   async function handleLogin() {
