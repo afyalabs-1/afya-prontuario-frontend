@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
   },
   formControl: {
-    margin: theme.spacing(1),
     minWidth: 150,
   },
 }));
@@ -176,8 +175,9 @@ const CustomerRegistration = () => {
                 />
               </Grid>
             </Grid>
-            <Grid container spacing={3} alignItems="center" justify="center">
-              <Grid item xs={4}>
+
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs>
                 <FormControl
                   variant="outlined"
                   fullWidth={true}
@@ -200,7 +200,7 @@ const CustomerRegistration = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs>
                 <TextField
                   id="birthDate"
                   label="Data de Nascimento"
@@ -216,7 +216,7 @@ const CustomerRegistration = () => {
                   onChange={(e) => setBirthDate(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs>
                 <FormControl
                   variant="outlined"
                   fullWidth={true}
@@ -244,8 +244,9 @@ const CustomerRegistration = () => {
                 </FormControl>
               </Grid>
             </Grid>
-            <Grid container spacing={3} alignItems="center">
-              <Grid item xs={4}>
+
+            <Grid container spacing={2} alignItems="center" justify="center">
+              <Grid item xs>
                 <TextField
                   id="cep"
                   label="CEP"
@@ -257,9 +258,9 @@ const CustomerRegistration = () => {
                   onChange={(e) => setCep(e.target.value)}
                 />
               </Grid>
-              <Grid item xs>
+              <Grid item xs={false}>
                 <Button
-                  variant="contained"
+                  variant="outlined"
                   color="secondary"
                   onClick={() => {
                     cepValidationApi();
@@ -269,7 +270,7 @@ const CustomerRegistration = () => {
                   Validar CEP
                 </Button>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs>
                 <TextField
                   id="state"
                   label="Estado"
@@ -280,31 +281,33 @@ const CustomerRegistration = () => {
                   value={state}
                 />
               </Grid>
-              <Grid container spacing={3} alignItems="center">
-                <Grid item xs>
-                  <TextField
-                    id="city"
-                    label="Cidade"
-                    variant="outlined"
-                    color="secondary"
-                    fullWidth={true}
-                    className={classes.marginBottomField}
-                    value={city}
-                  />
-                </Grid>
-                <Grid item xs>
-                  <TextField
-                    id="district"
-                    label="Bairro"
-                    variant="outlined"
-                    color="secondary"
-                    fullWidth={true}
-                    className={classes.marginBottomField}
-                    value={district}
-                  />
-                </Grid>
+            </Grid>
+
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs>
+                <TextField
+                  id="city"
+                  label="Cidade"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                  value={city}
+                />
+              </Grid>
+              <Grid item xs>
+                <TextField
+                  id="district"
+                  label="Bairro"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                  value={district}
+                />
               </Grid>
             </Grid>
+
             <TextField
               id="adress"
               label="Endereço"
@@ -350,8 +353,8 @@ const CustomerRegistration = () => {
               value={avatar}
               onChange={(e) => setAvatar(e.target.value)}
             />
-            <Grid container alignItems="center">
-              <Grid item xs={12}>
+            <Grid container alignItems="center" justify="flex-end">
+              <Grid item xs={false}>
                 <Button
                   variant="contained"
                   color="secondary"
