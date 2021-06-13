@@ -4,22 +4,31 @@ import { toast } from "react-toastify";
 
 import { LoginRouter } from "../../api/LoginApi";
 
-export const isAuthenticated = () => {
-  const history = useHistory();
-  const [isLogin, setLoginData] = useState(false);
+export const 
+    isAuthenticated = () => {
+        const data = { email: this.email, password: this.password };
+        const requestInfo = {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: new Headers({
+                'Content-Type': 'application/json'
+            }),
+        };
 
-  const loginSubmit = useCallback(function handleSubmit(e) {
-    e.preventDefault();
-    console.log("Você clicou em enviar.");
-    setLoginData(true)
-        LoginRouter.post('login')
-        .then(
-            response => {
-                localStorage.setItem('token', response.data.token)
-                toast.success('Login realizado!', {
-                    onClose: () => history.push('/')
-                })
+        fetch('https://afya-challenge.herokuapp.com/auth/login', requestInfo)
+        .then(response => {
+            if(response.ok) {
+                return response.json()
             }
-        ).catch( err => toast.error('OOOps, algo deu errado')).finally( () => setLoginData(false))
-  },[history]);
-};
+            throw new Error("Login inválido...");
+        })
+        .then(token => {
+            localStorage.setItem('token', token);
+            this.props.history.push("/");
+            return;
+        })
+        .catch(e => {
+            toast.error('OOOps, algo deu errado');
+            console.log("Algo deu errado");
+        }); 
+    }
