@@ -12,6 +12,9 @@ import Container from "@material-ui/core/Container";
 import Navbar from "../../components/Navbar";
 
 import { createClient as createClientApi } from "../../api/ClientApi";
+import { getClients } from "../../api/ClientApi";
+import { cepValidation } from "../../api/ViaCepApi";
+import { createAdress } from "../../api/AdressApi";
 
 const useStyles = makeStyles((theme) => ({
   marginBox: {
@@ -40,6 +43,13 @@ const CustomerRegistration = () => {
   const [birthDate, setBirthDate] = useState("");
   const [bloodType, setBloodType] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [cep, setCep] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+  const [district, setDistrict] = useState("");
+  const [adress, setAdress] = useState("");
+  const [number, setNumber] = useState("");
+  const [complement, setComplement] = useState("");
 
   const createClient = () => {
     const clientData = {
@@ -53,12 +63,47 @@ const CustomerRegistration = () => {
       bloodType: bloodType,
       profilePictureUrl: avatar,
     };
+
+    const clientAdress = {
+      postalCode: cep,
+      state: state,
+      city: city,
+      district: district,
+      street: adress,
+      number: number,
+      complement: complement,
+    };
     createClientApi(clientData)
       .then((response) => {
         console.log("Cliente criado com sucesso!");
+        let clientId = response.data.id;
+        clientAdress.clients = { id: clientId };
+
+        createAdress(clientAdress)
+          .then(() => {
+            console.log("Cliente criado com endereço vinculado!");
+          })
+          .catch((error) => {
+            console.error("Deu ruim no endereço!");
+          });
       })
       .catch((error) => {
         console.error("Algo deu errado na criação do cliente");
+      });
+  };
+
+  const cepValidationApi = () => {
+    cepValidation
+      .get(`${cep}/json/`)
+      .then((response) => {
+        setState(response.data.uf);
+        setCity(response.data.localidade);
+        setDistrict(response.data.bairro);
+        setAdress(response.data.logradouro);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Algo deu errado na requisição do cep");
       });
   };
 
@@ -208,7 +253,21 @@ const CustomerRegistration = () => {
                   color="secondary"
                   fullWidth={true}
                   className={classes.marginBottomField}
+                  value={cep}
+                  onChange={(e) => setCep(e.target.value)}
                 />
+              </Grid>
+              <Grid item xs>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    cepValidationApi();
+                    console.log(cep);
+                  }}
+                >
+                  Validar CEP
+                </Button>
               </Grid>
               <Grid item xs={4}>
                 <TextField
@@ -218,27 +277,34 @@ const CustomerRegistration = () => {
                   color="secondary"
                   fullWidth={true}
                   className={classes.marginBottomField}
+                  value={state}
                 />
               </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  id="city"
-                  label="Cidade"
-                  variant="outlined"
-                  color="secondary"
-                  fullWidth={true}
-                  className={classes.marginBottomField}
-                />
+              <Grid container spacing={3} alignItems="center">
+                <Grid item xs>
+                  <TextField
+                    id="city"
+                    label="Cidade"
+                    variant="outlined"
+                    color="secondary"
+                    fullWidth={true}
+                    className={classes.marginBottomField}
+                    value={city}
+                  />
+                </Grid>
+                <Grid item xs>
+                  <TextField
+                    id="district"
+                    label="Bairro"
+                    variant="outlined"
+                    color="secondary"
+                    fullWidth={true}
+                    className={classes.marginBottomField}
+                    value={district}
+                  />
+                </Grid>
               </Grid>
             </Grid>
-            <TextField
-              id="district"
-              label="Bairro"
-              variant="outlined"
-              color="secondary"
-              fullWidth={true}
-              className={classes.marginBottomField}
-            />
             <TextField
               id="adress"
               label="Endereço"
@@ -246,7 +312,34 @@ const CustomerRegistration = () => {
               color="secondary"
               fullWidth={true}
               className={classes.marginBottomField}
+              value={adress}
             />
+            <Grid container spacing={3} alignItems="center">
+              <Grid item xs>
+                <TextField
+                  id="number"
+                  label="Número"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                  value={number}
+                  onChange={(e) => setNumber(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs>
+                <TextField
+                  id="complement"
+                  label="Complemento"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                  value={complement}
+                  onChange={(e) => setComplement(e.target.value)}
+                />
+              </Grid>
+            </Grid>
             <TextField
               id="avatar"
               label="Imagem de Perfil (URL)"
