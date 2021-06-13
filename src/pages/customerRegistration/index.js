@@ -138,7 +138,7 @@ const CustomerRegistration = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar title="Cadastro de Clientes" />
       <Container>
         <div className={classes.marginBox}>
           <form>
