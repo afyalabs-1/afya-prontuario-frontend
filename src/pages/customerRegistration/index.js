@@ -10,8 +10,12 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Container from "@material-ui/core/Container";
 import Navbar from "../../components/Navbar";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import { createClient as createClientApi } from "../../api/ClientApi";
+import { cepValidation } from "../../api/ViaCepApi";
+import { createAdress } from "../../api/AdressApi";
 
 const useStyles = makeStyles((theme) => ({
   marginBox: {
@@ -24,10 +28,19 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
   },
   formControl: {
-    margin: theme.spacing(1),
     minWidth: 150,
   },
+  snackbar: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
+
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
 
 const CustomerRegistration = () => {
   const classes = useStyles();
@@ -40,6 +53,21 @@ const CustomerRegistration = () => {
   const [birthDate, setBirthDate] = useState("");
   const [bloodType, setBloodType] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [cep, setCep] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+  const [district, setDistrict] = useState("");
+  const [adress, setAdress] = useState("");
+  const [number, setNumber] = useState("");
+  const [complement, setComplement] = useState("");
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const refreshPage = () => {
+    setTimeout(() => {
+      document.location.reload();
+    }, 2000);
+  };
 
   const createClient = () => {
     const clientData = {
@@ -53,13 +81,59 @@ const CustomerRegistration = () => {
       bloodType: bloodType,
       profilePictureUrl: avatar,
     };
+
+    const clientAdress = {
+      postalCode: cep,
+      state: state,
+      city: city,
+      district: district,
+      street: adress,
+      number: number,
+      complement: complement,
+    };
+    setLoading(true);
     createClientApi(clientData)
       .then((response) => {
         console.log("Cliente criado com sucesso!");
+        let clientId = response.data.id;
+        clientAdress.clients = { id: clientId };
+
+        createAdress(clientAdress)
+          .then(() => {
+            console.log("Cliente criado com endereço vinculado!");
+            setOpen(true);
+            setLoading(false);
+            refreshPage();
+          })
+          .catch((error) => {
+            console.error("Deu ruim no endereço!");
+          });
       })
       .catch((error) => {
         console.error("Algo deu errado na criação do cliente");
       });
+  };
+
+  const cepValidationApi = () => {
+    cepValidation
+      .get(`${cep}/json/`)
+      .then((response) => {
+        setState(response.data.uf);
+        setCity(response.data.localidade);
+        setDistrict(response.data.bairro);
+        setAdress(response.data.logradouro);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Algo deu errado na requisição do cep");
+      });
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
   };
 
   return (
@@ -131,8 +205,9 @@ const CustomerRegistration = () => {
                 />
               </Grid>
             </Grid>
-            <Grid container spacing={3} alignItems="center" justify="center">
-              <Grid item xs={4}>
+
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs>
                 <FormControl
                   variant="outlined"
                   fullWidth={true}
@@ -155,7 +230,7 @@ const CustomerRegistration = () => {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs>
                 <TextField
                   id="birthDate"
                   label="Data de Nascimento"
@@ -171,7 +246,7 @@ const CustomerRegistration = () => {
                   onChange={(e) => setBirthDate(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs>
                 <FormControl
                   variant="outlined"
                   fullWidth={true}
@@ -199,8 +274,9 @@ const CustomerRegistration = () => {
                 </FormControl>
               </Grid>
             </Grid>
-            <Grid container spacing={3} alignItems="center">
-              <Grid item xs={4}>
+
+            <Grid container spacing={2} alignItems="center" justify="center">
+              <Grid item xs>
                 <TextField
                   id="cep"
                   label="CEP"
@@ -208,9 +284,23 @@ const CustomerRegistration = () => {
                   color="secondary"
                   fullWidth={true}
                   className={classes.marginBottomField}
+                  value={cep}
+                  onChange={(e) => setCep(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={false}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => {
+                    cepValidationApi();
+                    console.log(cep);
+                  }}
+                >
+                  Validar CEP
+                </Button>
+              </Grid>
+              <Grid item xs>
                 <TextField
                   id="state"
                   label="Estado"
@@ -218,9 +308,13 @@ const CustomerRegistration = () => {
                   color="secondary"
                   fullWidth={true}
                   className={classes.marginBottomField}
+                  value={state}
                 />
               </Grid>
-              <Grid item xs={4}>
+            </Grid>
+
+            <Grid container spacing={2} alignItems="center">
+              <Grid item xs>
                 <TextField
                   id="city"
                   label="Cidade"
@@ -228,17 +322,22 @@ const CustomerRegistration = () => {
                   color="secondary"
                   fullWidth={true}
                   className={classes.marginBottomField}
+                  value={city}
+                />
+              </Grid>
+              <Grid item xs>
+                <TextField
+                  id="district"
+                  label="Bairro"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                  value={district}
                 />
               </Grid>
             </Grid>
-            <TextField
-              id="district"
-              label="Bairro"
-              variant="outlined"
-              color="secondary"
-              fullWidth={true}
-              className={classes.marginBottomField}
-            />
+
             <TextField
               id="adress"
               label="Endereço"
@@ -246,7 +345,34 @@ const CustomerRegistration = () => {
               color="secondary"
               fullWidth={true}
               className={classes.marginBottomField}
+              value={adress}
             />
+            <Grid container spacing={3} alignItems="center">
+              <Grid item xs>
+                <TextField
+                  id="number"
+                  label="Número"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                  value={number}
+                  onChange={(e) => setNumber(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs>
+                <TextField
+                  id="complement"
+                  label="Complemento"
+                  variant="outlined"
+                  color="secondary"
+                  fullWidth={true}
+                  className={classes.marginBottomField}
+                  value={complement}
+                  onChange={(e) => setComplement(e.target.value)}
+                />
+              </Grid>
+            </Grid>
             <TextField
               id="avatar"
               label="Imagem de Perfil (URL)"
@@ -257,8 +383,8 @@ const CustomerRegistration = () => {
               value={avatar}
               onChange={(e) => setAvatar(e.target.value)}
             />
-            <Grid container alignItems="center">
-              <Grid item xs={12}>
+            <Grid container alignItems="center" justify="flex-end">
+              <Grid item xs={false}>
                 <Button
                   variant="contained"
                   color="secondary"
@@ -266,9 +392,21 @@ const CustomerRegistration = () => {
                   onClick={() => {
                     createClient();
                   }}
+                  disabled={loading}
                 >
                   Salvar
                 </Button>
+
+                <Snackbar
+                  className={classes.snackbar}
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={handleClose}
+                >
+                  <Alert onClose={handleClose} severity="success">
+                    Seu atendimento foi marcado com sucesso!
+                  </Alert>
+                </Snackbar>
               </Grid>
             </Grid>
           </form>
