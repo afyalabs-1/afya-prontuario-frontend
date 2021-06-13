@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -13,7 +13,8 @@ import Navbar from "../../components/Navbar";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 
-import { createClient as createClientApi } from "../../api/ClientApi";
+import { createSpecialist as createSpecialistApi } from "../../api/SpecialistApi";
+import { getProfessions } from "../../api/ProfessionApi";
 import { cepValidation } from "../../api/ViaCepApi";
 import { createAdress } from "../../api/AdressApi";
 
@@ -42,16 +43,13 @@ const Alert = (props) => {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 };
 
-const CustomerRegistration = () => {
+const SpecialistRegistration = () => {
   const classes = useStyles();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [cel, setCel] = useState("");
-  const [cpf, setCpf] = useState("");
+  const [crm, setCrm] = useState("");
   const [email, setEmail] = useState("");
-  const [gender, setGender] = useState("");
-  const [birthDate, setBirthDate] = useState("");
-  const [bloodType, setBloodType] = useState("");
   const [avatar, setAvatar] = useState("");
   const [cep, setCep] = useState("");
   const [state, setState] = useState("");
@@ -62,6 +60,8 @@ const CustomerRegistration = () => {
   const [complement, setComplement] = useState("");
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [professionId, setProfessionId] = useState("");
+  const [allProfessions, setAllProfessions] = useState([]);
 
   const refreshPage = () => {
     setTimeout(() => {
@@ -69,20 +69,18 @@ const CustomerRegistration = () => {
     }, 2000);
   };
 
-  const createClient = () => {
-    const clientData = {
-      cpf: cpf,
+  const createSpecialist = () => {
+    const specialistData = {
       name: name,
       email: email,
       phoneNumber: phone,
       cellPhone: cel,
-      birthDate: birthDate,
-      gender: gender,
-      bloodType: bloodType,
+      crm: crm,
       profilePictureUrl: avatar,
+      profession: professionId,
     };
 
-    const clientAdress = {
+    const specialistAdress = {
       postalCode: cep,
       state: state,
       city: city,
@@ -92,15 +90,15 @@ const CustomerRegistration = () => {
       complement: complement,
     };
     setLoading(true);
-    createClientApi(clientData)
+    createSpecialistApi(specialistData)
       .then((response) => {
-        console.log("Cliente criado com sucesso!");
-        let clientId = response.data.id;
-        clientAdress.clients = { id: clientId };
+        console.log("Especialista criado com sucesso!");
+        let specialistId = response.data.id;
+        specialistAdress.specialist = { id: specialistId };
 
-        createAdress(clientAdress)
+        createAdress(specialistAdress)
           .then(() => {
-            console.log("Cliente criado com endereço vinculado!");
+            console.log("Epecialista criado com endereço vinculado!");
             setOpen(true);
             setLoading(false);
             refreshPage();
@@ -110,7 +108,7 @@ const CustomerRegistration = () => {
           });
       })
       .catch((error) => {
-        console.error("Algo deu errado na criação do cliente");
+        console.error("Algo deu errado na criação do Especialista");
       });
   };
 
@@ -136,14 +134,24 @@ const CustomerRegistration = () => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    getProfessions()
+      .then((response) => {
+        setAllProfessions(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao puxar as profissões.");
+      });
+  }, []);
+
   return (
     <div>
-      <Navbar title="Cadastro de Clientes" />
+      <Navbar title="Cadastro de Especialista" />
       <Container>
         <div className={classes.marginBox}>
           <form>
             <TextField
-              id="clientName"
+              id="specialistName"
               label="Nome Completo"
               variant="outlined"
               color="secondary"
@@ -152,6 +160,31 @@ const CustomerRegistration = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
+
+            <FormControl
+              variant="outlined"
+              fullWidth={true}
+              className={classes.formControl}
+            >
+              <InputLabel id="profession">Profissão</InputLabel>
+              <Select
+                labelId="select-profession"
+                id="profession"
+                label="profession"
+                justify="center"
+                color="secondary"
+                className={classes.marginBottomField}
+                value={professionId}
+                onChange={(e) => setProfessionId(e.target.value)}
+              >
+                {allProfessions.map((profession) => (
+                  <MenuItem key={profession.id} value={profession.id}>
+                    {profession.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={6}>
                 <TextField
@@ -182,14 +215,14 @@ const CustomerRegistration = () => {
             <Grid container spacing={2} alignItems="center">
               <Grid item xs={6}>
                 <TextField
-                  id="cpf"
-                  label="CPF"
+                  id="crm"
+                  label="CRM"
                   variant="outlined"
                   color="secondary"
                   fullWidth={true}
                   className={classes.marginBottomField}
-                  value={cpf}
-                  onChange={(e) => setCpf(e.target.value)}
+                  value={crm}
+                  onChange={(e) => setCrm(e.target.value)}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -203,75 +236,6 @@ const CustomerRegistration = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-              </Grid>
-            </Grid>
-
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs>
-                <FormControl
-                  variant="outlined"
-                  fullWidth={true}
-                  className={classes.formControl}
-                >
-                  <InputLabel id="gender">Gênero</InputLabel>
-                  <Select
-                    labelId="select-gender"
-                    id="gender"
-                    label="gender"
-                    justify="center"
-                    color="secondary"
-                    className={classes.marginBottomField}
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
-                  >
-                    <MenuItem value={"FEMALE"}>Feminino</MenuItem>
-                    <MenuItem value={"MALE"}>Masculino</MenuItem>
-                    <MenuItem value={"OTHER"}>Outros</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs>
-                <TextField
-                  id="birthDate"
-                  label="Data de Nascimento"
-                  type="date"
-                  variant="outlined"
-                  color="secondary"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  value={birthDate}
-                  fullWidth={true}
-                  className={classes.marginBottomField}
-                  onChange={(e) => setBirthDate(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs>
-                <FormControl
-                  variant="outlined"
-                  fullWidth={true}
-                  className={classes.formControl}
-                >
-                  <InputLabel id="Tipo Sanguíneo">Tipo sanguíneo</InputLabel>
-                  <Select
-                    id="bloodType"
-                    label="Tipo sanguíneo"
-                    justify="center"
-                    color="secondary"
-                    className={classes.marginBottomField}
-                    value={bloodType}
-                    onChange={(e) => setBloodType(e.target.value)}
-                  >
-                    <MenuItem value={"A_POSITIVE"}>A+</MenuItem>
-                    <MenuItem value={"A_NEGATIVE"}>A-</MenuItem>
-                    <MenuItem value={"B_POSITIVE"}>B+</MenuItem>
-                    <MenuItem value={"B_NEGATIVE"}>B-</MenuItem>
-                    <MenuItem value={"O_POSITIVE"}>O+</MenuItem>
-                    <MenuItem value={"O_NEGATIVE"}>O-</MenuItem>
-                    <MenuItem value={"AB_POSITIVE"}>AB+</MenuItem>
-                    <MenuItem value={"AB_NEGATIVE"}>AB+</MenuItem>
-                  </Select>
-                </FormControl>
               </Grid>
             </Grid>
 
@@ -390,7 +354,7 @@ const CustomerRegistration = () => {
                   color="secondary"
                   startIcon={<SaveIcon />}
                   onClick={() => {
-                    createClient();
+                    createSpecialist();
                   }}
                   disabled={loading}
                 >
@@ -404,7 +368,7 @@ const CustomerRegistration = () => {
                   onClose={handleClose}
                 >
                   <Alert onClose={handleClose} severity="success">
-                    Seu cliente foi craido com sucesso!
+                    Seu especialista foi criado com sucesso!
                   </Alert>
                 </Snackbar>
               </Grid>
@@ -416,4 +380,4 @@ const CustomerRegistration = () => {
   );
 };
 
-export default CustomerRegistration;
+export default SpecialistRegistration;
