@@ -10,9 +10,10 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Container from "@material-ui/core/Container";
 import Navbar from "../../components/Navbar";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import { createClient as createClientApi } from "../../api/ClientApi";
-import { getClients } from "../../api/ClientApi";
 import { cepValidation } from "../../api/ViaCepApi";
 import { createAdress } from "../../api/AdressApi";
 
@@ -29,7 +30,17 @@ const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: 150,
   },
+  snackbar: {
+    width: "100%",
+    "& > * + *": {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
+
+const Alert = (props) => {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+};
 
 const CustomerRegistration = () => {
   const classes = useStyles();
@@ -49,6 +60,14 @@ const CustomerRegistration = () => {
   const [adress, setAdress] = useState("");
   const [number, setNumber] = useState("");
   const [complement, setComplement] = useState("");
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const refreshPage = () => {
+    setTimeout(() => {
+      document.location.reload();
+    }, 2000);
+  };
 
   const createClient = () => {
     const clientData = {
@@ -72,6 +91,7 @@ const CustomerRegistration = () => {
       number: number,
       complement: complement,
     };
+    setLoading(true);
     createClientApi(clientData)
       .then((response) => {
         console.log("Cliente criado com sucesso!");
@@ -81,6 +101,9 @@ const CustomerRegistration = () => {
         createAdress(clientAdress)
           .then(() => {
             console.log("Cliente criado com endereço vinculado!");
+            setOpen(true);
+            setLoading(false);
+            refreshPage();
           })
           .catch((error) => {
             console.error("Deu ruim no endereço!");
@@ -104,6 +127,13 @@ const CustomerRegistration = () => {
       .catch((error) => {
         console.error("Algo deu errado na requisição do cep");
       });
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
   };
 
   return (
@@ -362,9 +392,21 @@ const CustomerRegistration = () => {
                   onClick={() => {
                     createClient();
                   }}
+                  disabled={loading}
                 >
                   Salvar
                 </Button>
+
+                <Snackbar
+                  className={classes.snackbar}
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={handleClose}
+                >
+                  <Alert onClose={handleClose} severity="success">
+                    Seu atendimento foi marcado com sucesso!
+                  </Alert>
+                </Snackbar>
               </Grid>
             </Grid>
           </form>
