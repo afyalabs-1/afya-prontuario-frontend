@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { login as loginApi } from "../../api/LoginApi";
+import { toast } from "react-toastify";
 
 // TO DO:
 // Adicionar snackbars para confirmar login
@@ -72,10 +73,12 @@ const Login = () => {
     loginApi(userData)
       .then((response) => {
         localStorage.setItem("token", response.data.session.token);
+        //toast.success('Login realizado com sucesso!');
         window.location.href = "/";
       })
       .catch((error) => {
-        console.error("Erro ao chamar login no back.");
+        //console.error("Erro ao chamar login no back.");
+        toast.error('Algo deu errado. Nome de usuário e/ou senha não existe.');
       });
   };
 
