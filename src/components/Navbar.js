@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
 import * as RiIcons from "react-icons/ri";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
@@ -12,6 +13,11 @@ function Navbar({ title }) {
 
   const showSidebar = () => setSidebar(!sidebar);
 
+  const logOut = () => {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
   return (
     <IconContext.Provider value={{ color: "#fff" }}>
       <div className="navbar">
@@ -20,7 +26,9 @@ function Navbar({ title }) {
         </Link>
         <h2 className="nav-bar-title">{title}</h2>
         <Link to="#" className="menu-bars">
-          <RiIcons.RiLogoutCircleRLine />
+          <Button onClick={logOut}>
+            <RiIcons.RiLogoutCircleRLine />
+          </Button>
         </Link>
       </div>
       <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
