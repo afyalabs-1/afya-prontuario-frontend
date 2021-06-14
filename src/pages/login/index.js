@@ -1,7 +1,4 @@
-import React, {useContext} from "react";
-import { isAuthenticated } from "./auth"
-
-
+import React, { useContext, useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -13,26 +10,23 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
+import { login as loginApi } from "../../api/LoginApi";
 
-// TO DO: 
+// TO DO:
 // Adicionar snackbars para confirmar login
 // Adicionar snackbars para falha no login
 // Verificar imagem de background (adicionar nos arquivos do projeto ou usar URL?)
 // Realizar integração com o back-end
 
-
-function Copyright() {
+const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-     
-        Team #1 - O time que a Afya Gama!
-      {" "}
-      {new Date().getFullYear()}
+      Team #1 - O time que a Afya Gama! {new Date().getFullYear()}
       {"."}
     </Typography>
   );
-}
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,9 +61,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+const Login = () => {
   const classes = useStyles();
-  
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const login = () => {
+    const userData = { userName: email, password: password };
+    loginApi(userData)
+      .then((response) => {
+        localStorage.setItem("token", response.data.session.token);
+        window.location.href = "/";
+      })
+      .catch((error) => {
+        console.error("Erro ao chamar login no back.");
+      });
+  };
 
   return (
     <Grid container component="main" className={classes.root}>
@@ -78,13 +86,11 @@ export default function Login() {
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
-            <LockOutlinedIcon/>
+            <LockOutlinedIcon />
           </Avatar>
-          <Typography variant="h3">
-          AfyaGama
-          </Typography>
+          <Typography variant="h3">AfyaGama</Typography>
           <Typography textAlign="center">
-          Sistema de agendamento para clínicas e consultórios
+            Sistema de agendamento para clínicas e consultórios
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -97,6 +103,8 @@ export default function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               variant="outlined"
@@ -108,14 +116,15 @@ export default function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
 
             <Button
-             
               fullWidth
               variant="contained"
               color="primary"
-              onClick={isAuthenticated}
+              onClick={login}
             >
               Entrar
             </Button>
@@ -128,4 +137,6 @@ export default function Login() {
       </Grid>
     </Grid>
   );
-}
+};
+
+export default Login;
