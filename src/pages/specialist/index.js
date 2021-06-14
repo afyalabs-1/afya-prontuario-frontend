@@ -54,6 +54,9 @@ const Specialist = () => {
                 specialist={specialist}
               >
                 <Grid container spacing={3} alignItems="center">
+                  <Grid item xs={1}>
+                    <Avatar alt="Foto" src={specialist.proflePictureUrl} />
+                  </Grid>
                   <Grid item xs>
                     <Typography
                       onClick={() => console.log("Hello")}

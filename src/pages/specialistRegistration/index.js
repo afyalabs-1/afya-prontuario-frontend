@@ -137,6 +137,7 @@ const SpecialistRegistration = () => {
   useEffect(() => {
     getProfessions()
       .then((response) => {
+        console.log(response);
         setAllProfessions(response.data);
       })
       .catch((error) => {
