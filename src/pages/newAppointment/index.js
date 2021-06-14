@@ -17,8 +17,7 @@ import MuiAlert from "@material-ui/lab/Alert";
 import Container from "@material-ui/core/Container";
 import Navbar from "../../components/Navbar";
 
-import { getAppointments, createAppointment } from "../../api/AppointmentApi";
-import { getAttendances } from "../../api/AttendancesApi";
+import { createAttendances } from "../../api/AttendancesApi";
 import { getSpecialist } from "../../api/SpecialistApi";
 import { getClients } from "../../api/ClientApi";
 
@@ -90,16 +89,6 @@ const NewAppointment = ({ onClick }) => {
       });
   }, []);
 
-  useEffect(() => {
-    getAppointments()
-      .then((response) => {
-        setClients(response.data);
-      })
-      .catch((error) => {
-        console.error("Erro ao pegar clients.");
-      });
-  }, []);
-
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -113,9 +102,17 @@ const NewAppointment = ({ onClick }) => {
     }, 1000);
   };
 
-  const createAppointmentOnServer = () => {
+  const createAppointment = () => {
+    const appointmentData = {
+      serviceDate: date + time,
+      serviceTime: date + time,
+      value: price,
+      client: selectedClient,
+      specialists: selectedSpecialist,
+      status: appointmentStatus,
+    };
     setLoading(true);
-    createAppointment()
+    createAttendances(appointmentData)
       .then((response) => {
         setOpen(true);
         setLoading(false);
@@ -238,9 +235,9 @@ const NewAppointment = ({ onClick }) => {
                       value={appointmentStatus}
                       onChange={(e) => setAppointmentStatus(e.target.value)}
                     >
-                      <MenuItem value={1}>Agendado</MenuItem>
-                      <MenuItem value={2}>Realizado</MenuItem>
-                      <MenuItem value={3}>Cancelado</MenuItem>
+                      <MenuItem value={"SCHEDULED"}>Agendado</MenuItem>
+                      <MenuItem value={"ACCOMPLISHED"}>Realizado</MenuItem>
+                      <MenuItem value={"CANCELED"}>Cancelado</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -261,7 +258,7 @@ const NewAppointment = ({ onClick }) => {
                     className={classes.button}
                     startIcon={<ScheduleIcon />}
                     onClick={() => {
-                      createAppointmentOnServer();
+                      createAppointment();
                     }}
                     disabled={loading}
                   >
