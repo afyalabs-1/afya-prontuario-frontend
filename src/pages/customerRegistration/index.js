@@ -404,7 +404,7 @@ const CustomerRegistration = () => {
                   onClose={handleClose}
                 >
                   <Alert onClose={handleClose} severity="success">
-                    Seu cliente foi craido com sucesso!
+                    Seu cliente foi criado com sucesso!
                   </Alert>
                 </Snackbar>
               </Grid>

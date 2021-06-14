@@ -5,13 +5,16 @@
 
 ##### :dart: Objetivo
 
-O sistema de gerenciamento de consultórios AfyaGama é capaz de controlar o cadastro de seus clientes, atendimentos e prontuário dos pacientes.
-Neste front-end, você deve ser capaz experimentar a integração com as funcionalidades promovidas pelo [back-end do sistema](https://github.com/afyalabs-1/afya-prontuario-backend). 
+O sistema de gerenciamento de consultórios AfyaGama é capaz de controlar o cadastro de seus clientes, atendimentos e o histórico de prontuário dos clientes/pacientes.
+Nesssa parte do sistema (front-end), você deve ser capaz de navegar entre todas as páginas e experimentar a integração com as funcionalidades promovidas pelo [back-end do sistema](https://github.com/afyalabs-1/afya-prontuario-backend). 
 
 ##### :computer: Equipe de desenvolvimento
 - Frontend/UX: [Bianca Castanheira](https://github.com/BiancaCastanheira) e [Melissa Augusto Ribeiro](https://github.com/melissarib)
 - Back-end: [Alex Felipe Barbosa](https://github.com/AlexFelipeBarbosa), [Felipe Henrique Fernandes Andrade](https://github.com/fellipehfa) e [Robson Lourenço](https://github.com/robinhosl2008)
 
+##### :octocat: Tecnologias utilizadas
+- ReactJS: biblioteca Javascript para criação de views para cada estado da aplicação 
+- Material-UI: framework de componentes React para construção de design.
 
 ##### :memo: Funcionalidades 
 - [x] Realização do Cadastro de Clientes 

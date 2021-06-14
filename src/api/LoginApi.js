@@ -1,5 +1,5 @@
 import { api } from "./Api";
 
-export const LoginRouter = () => {
-  return api.post("auth/login");
+export const login = (userData) => {
+  return api.post("auth/login", userData);
 };
