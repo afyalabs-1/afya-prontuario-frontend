@@ -7,3 +7,7 @@ export const getAttendances = () => {
 export const createAttendances = (appointmentData) => {
   return api.post("/attendances", appointmentData);
 };
+
+export const getAttendances = () => {
+  return api.get("/attendances");
+};
