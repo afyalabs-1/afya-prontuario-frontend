@@ -25,7 +25,7 @@ export const Statistics = () => {
 
   return (
     <Container>
-      <Box display="flex" justifyContent="flex-end" m={1} p={1}>
+      {/* <Box display="flex" justifyContent="flex-end" m={1} p={1}>
       <Card variant="outlined">
       <CardContent>
           <Typography variant="h4">Bem vindo, AfyaGama! </Typography> <br />
@@ -54,7 +54,7 @@ export const Statistics = () => {
           />
         
 
-      </Box>
+      </Box> */}
     </Container>
   );
 };

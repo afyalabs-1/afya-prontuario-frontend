@@ -33,14 +33,13 @@ export const Cards = () => {
     <Container>
       <Box display="flex" justifyContent="flex-end" m={1} p={1}>
         <Grid container spacing={3}>
-
           {/* Caso não vá utilizar as estatisticas de pieChart,
               utilizar o código abaixo */}
 
-          {/* <Grid item xs={12}>
+          <Grid item xs={12}>
             <Card variant="outlined">
               <CardContent>
-                <Typography variant="h4">Bem vindo, AfyaGama! </Typography>{" "}
+                <Typography variant="h4">Bem vindo ao AfyaGama! </Typography>{" "}
                 <br />
                 <Typography align="justify" variant="body1">
                   Realize o gerenciamento de atendimentos da sua clinica médica.
@@ -49,10 +48,29 @@ export const Cards = () => {
                   clientes quanto de especialistas atualizado. Todos esses dados
                   serão salvos em uma banco de dados que pode ser acessado
                   apenas por rotas autorizadas para fazer suas requisições.
+                  </Typography>
+                  <br />
+                  <Typography align="justify" variant="body1">
+                  IMPORTANTE: A Lei Geral de Proteção de Dados Pessoais (LGPD),
+                  Lei nº 13.709, de 14 de agosto de 2018, dispõe sobre o
+                  tratamento de dados pessoais, inclusive nos meios digitais,
+                  por pessoa natural ou por pessoa jurídica de direito público
+                  ou privado, com o objetivo de proteger os direitos
+                  fundamentais de liberdade e de privacidade e o livre
+                  desenvolvimento da personalidade da pessoa natural. Toda
+                  pessoa natural tem assegurada a titularidade de seus dados
+                  pessoais e garantidos os direitos fundamentais de liberdade,
+                  de intimidade e de privacidade, nos termos da LGPD. Ao
+                  utilizar o AfyaGama, lembre-se de garantir todos estes
+                  direitos garantidos por lei.
+                </Typography>
+                <br />
+                <Typography align="right" variant="body1">
+                Equipe de desenvolvimento
                 </Typography>
               </CardContent>
             </Card>
-          </Grid> */}
+          </Grid>
 
           <Grid item xs={4}>
             <Link to="/customer">
