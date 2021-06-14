@@ -34,7 +34,7 @@ const Specialist = () => {
     getSpecialist()
       .then((response) => {
         console.log(response);
-        setSpecialists(response.data.specialists);
+        setSpecialists(response.data);
       })
       .catch((error) => {
         console.error("Erro na requisição dos especialistas");

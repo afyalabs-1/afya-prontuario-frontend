@@ -4,15 +4,15 @@ import { BrowserRouter, Router, Switch, Route } from "react-router-dom";
 import PrivateRoutes from "./private.routes";
 
 //Páginas
-import Customer from "../pages/customer";
-import CustomerRegistration from "../pages/customerRegistration";
-import Dashboard from "../pages/dashboard";
-import Login from "../pages/login";
-import MedicalRecord from "../pages/medicalRecord";
-import NewAppointment from "../pages/newAppointment";
-import Schedule from "../pages/schedule";
-import Specialist from "../pages/specialist";
-import SpecialistRegistration from "../../pages/specialistRegistration";
+import Customer from "../pages/customer/index";
+import CustomerRegistration from "../pages/customerRegistration/index";
+import Dashboard from "../pages/dashboard/index";
+import Login from "../pages/login/index";
+import MedicalRecord from "../pages/medicalRecord/index";
+import NewAppointment from "../pages/newAppointment/index";
+import Schedule from "../pages/schedule/index";
+import Specialist from "../pages/specialist/index";
+import SpecialistRegistration from "../pages/specialistRegistration/index";
 
 const Routes = () => {
   return (
