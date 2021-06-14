@@ -18,8 +18,9 @@ import Container from "@material-ui/core/Container";
 import Navbar from "../../components/Navbar";
 
 import { getAppointments, createAppointment } from "../../api/AppointmentApi";
+import { getAttendances } from "../../api/AttendancesApi";
 import { getSpecialist } from "../../api/SpecialistApi";
-// import { getClients } from "../../api/ClientApi";
+import { getClients } from "../../api/ClientApi";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -72,15 +73,22 @@ const NewAppointment = ({ onClick }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   getClients()
-  //     .then((response) => {
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
+  useEffect(() => {
+    getClients()
+      .then((response) => {
+        setClients(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    getSpecialist()
+      .then((response) => {
+        setSpecialists(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao pegar os specialists.");
+      });
+  }, []);
 
   useEffect(() => {
     getAppointments()
@@ -89,16 +97,6 @@ const NewAppointment = ({ onClick }) => {
       })
       .catch((error) => {
         console.error("Erro ao pegar clients.");
-      });
-  }, []);
-
-  useEffect(() => {
-    getSpecialist()
-      .then((response) => {
-        setSpecialists(response.data);
-      })
-      .catch((error) => {
-        console.error("Erro ao pegar os specialists.");
       });
   }, []);
 
