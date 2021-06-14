@@ -7,10 +7,7 @@ import SearchByFilters from "../../components/componentsSchedule/SearchByFilters
 import Container from "@material-ui/core/Container";
 import Navbar from "../../components/Navbar";
 
-import {
-  getAppointments,
-  getAppointmentsByClientName,
-} from "../../api/AppointmentApi";
+import { getAttendances } from "../../api/AttendancesApi";
 
 const Schedule = () => {
   const [loading, setLoading] = useState(false);
@@ -18,7 +15,7 @@ const Schedule = () => {
 
   useEffect(() => {
     setLoading(true);
-    getAppointments()
+    getAttendances()
       .then((response) => {
         setAppointments(response.data);
         setLoading(false);
@@ -29,20 +26,20 @@ const Schedule = () => {
   }, []);
 
   const getFilteredAppointments = () => {
-    setLoading(true);
-    getAppointmentsByClientName()
-      .then((response) => {
-        setAppointments(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Erro na requisição dos Appointments by Clients");
-      });
+    // setLoading(true);
+    // getAppointmentsByClientName()
+    //   .then((response) => {
+    //     setAppointments(response.data);
+    //     setLoading(false);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Erro na requisição dos Appointments by Clients");
+    //   });
   };
 
   return (
     <div>
-      <Navbar />
+      <Navbar title="Agenda" />
       <Container>
         <SearchByFilters onClick={() => getFilteredAppointments()} />
         {loading ? (
