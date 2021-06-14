@@ -17,9 +17,9 @@ import MuiAlert from "@material-ui/lab/Alert";
 import Container from "@material-ui/core/Container";
 import Navbar from "../../components/Navbar";
 
-import { getAppointments, createAppointment } from "../../api/AppointmentApi";
+import { createAttendances } from "../../api/AttendancesApi";
 import { getSpecialist } from "../../api/SpecialistApi";
-// import { getClients } from "../../api/ClientApi";
+import { getClients } from "../../api/ClientApi";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -63,8 +63,7 @@ const NewAppointment = ({ onClick }) => {
 
   const [selectedClient, setSelectedClient] = useState(null);
   const [selectedSpecialist, setSelectedSpecialist] = useState(null);
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [dateTime, setDateTime] = useState("");
   const [price, setPrice] = useState("");
   const [appointmentStatus, setAppointmentStatus] = useState("1");
   const [clients, setClients] = useState([]);
@@ -72,27 +71,15 @@ const NewAppointment = ({ onClick }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   getClients()
-  //     .then((response) => {
-  //       console.log(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
-
   useEffect(() => {
-    getAppointments()
+    console.log("teste");
+    getClients()
       .then((response) => {
         setClients(response.data);
       })
       .catch((error) => {
-        console.error("Erro ao pegar clients.");
+        console.error(error);
       });
-  }, []);
-
-  useEffect(() => {
     getSpecialist()
       .then((response) => {
         setSpecialists(response.data);
@@ -115,9 +102,17 @@ const NewAppointment = ({ onClick }) => {
     }, 1000);
   };
 
-  const createAppointmentOnServer = () => {
+  const createAppointment = () => {
+    const appointmentData = {
+      serviceDate: dateTime,
+      serviceTime: dateTime,
+      value: price,
+      client: selectedClient,
+      specialists: selectedSpecialist,
+      status: appointmentStatus,
+    };
     setLoading(true);
-    createAppointment()
+    createAttendances(appointmentData)
       .then((response) => {
         setOpen(true);
         setLoading(false);
@@ -139,7 +134,7 @@ const NewAppointment = ({ onClick }) => {
                 id="name"
                 options={clients}
                 onChange={(e, value) => setSelectedClient(value.id)}
-                getOptionLabel={(option) => option.clientName}
+                getOptionLabel={(option) => option.name}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -179,28 +174,15 @@ const NewAppointment = ({ onClick }) => {
               >
                 <Grid item xs="auto">
                   <TextField
-                    id="date"
-                    label="Dia"
-                    type="date"
+                    id="dateTime"
+                    label="Dia e Hora"
+                    type="datetime-local"
                     className={classes.margin}
                     InputLabelProps={{
                       shrink: true,
                     }}
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs="auto">
-                  <TextField
-                    id="time"
-                    label="Hora"
-                    type="time"
-                    className={classes.margin}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    defaultValue={time}
-                    onChange={(e) => setTime(e.target.value)}
+                    value={dateTime}
+                    onChange={(e) => setDateTime(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs="auto">
@@ -240,9 +222,9 @@ const NewAppointment = ({ onClick }) => {
                       value={appointmentStatus}
                       onChange={(e) => setAppointmentStatus(e.target.value)}
                     >
-                      <MenuItem value={1}>Agendado</MenuItem>
-                      <MenuItem value={2}>Realizado</MenuItem>
-                      <MenuItem value={3}>Cancelado</MenuItem>
+                      <MenuItem value={"SCHEDULED"}>Agendado</MenuItem>
+                      <MenuItem value={"ACCOMPLISHED"}>Realizado</MenuItem>
+                      <MenuItem value={"CANCELED"}>Cancelado</MenuItem>
                     </Select>
                   </FormControl>
                 </Grid>
@@ -263,7 +245,8 @@ const NewAppointment = ({ onClick }) => {
                     className={classes.button}
                     startIcon={<ScheduleIcon />}
                     onClick={() => {
-                      createAppointmentOnServer();
+                      createAppointment();
+                      console.log(dateTime);
                     }}
                     disabled={loading}
                   >

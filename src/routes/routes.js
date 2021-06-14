@@ -12,19 +12,24 @@ import MedicalRecord from "../pages/medicalRecord/index";
 import NewAppointment from "../pages/newAppointment/index";
 import Schedule from "../pages/schedule/index";
 import Specialist from "../pages/specialist/index";
+import SpecialistRegistration from "../pages/specialistRegistration/index";
 
 const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <PrivateRoutes path="/" exact component={Dashboard} />
+        <Route path="/" exact component={Dashboard} />
         <Route path="/login" component={Login} />
-        <PrivateRoutes path="/customerRegistration" component={CustomerRegistration} />
-        <PrivateRoutes path="/customer" component={Customer} />
-        <PrivateRoutes path="/medicalRecord" component={MedicalRecord} />
-        <PrivateRoutes path="/newAppointment" component={NewAppointment} />
-        <PrivateRoutes path="/schedule" component={Schedule} />
-        <PrivateRoutes path="/specialist" component={Specialist} />
+        <Route path="/customerRegistration" component={CustomerRegistration} />
+        <Route path="/customer" component={Customer} />
+        <Route path="/medicalRecord" component={MedicalRecord} />
+        <Route path="/newAppointment" component={NewAppointment} />
+        <Route path="/schedule" component={Schedule} />
+        <Route path="/specialist" component={Specialist} />
+        <Route
+          path="/specialistRegistration"
+          component={SpecialistRegistration}
+        />
       </Switch>
     </BrowserRouter>
   );
