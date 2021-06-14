@@ -3,22 +3,39 @@ import { Chart } from "react-google-charts";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import Container from "@material-ui/core/Container";
+import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import { CardContent } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    "& > *": {
+      margin: theme.spacing(1),
+      width: theme.spacing(16),
+      height: theme.spacing(16),
+    },
+  },
+}));
 
 export const Statistics = () => {
-  return (
-    <div>
-      <Box display="flex" justifyContent="flex-end" m={1} p={1}>
-        <Grid item md={8}>
-        <Typography variant="h4">Estatística dos atendimentos</Typography> <br />
-        <Typography variant="body1">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. </Typography>
-        </Grid>
+  const classes = useStyles();
 
-        <Grid item md={4}>
-          <Chart
+  return (
+    <Container>
+      {/* <Box display="flex" justifyContent="flex-end" m={1} p={1}>
+      <Card variant="outlined">
+      <CardContent>
+          <Typography variant="h4">Bem vindo, AfyaGama! </Typography> <br />
+          <Typography align="justify" variant="body1">
+          Realize o gerenciamento de atendimentos da sua clinica médica. Crie perfis de novos clientes, agende novas consultas, cadastre novos profissionais de saúde, e mantenha os dados de clientes quanto de especialistas atualizados. 
+          </Typography>
+          </CardContent>
+      </Card>
+      
+      <Chart
             width={"400px"}
             height={"200px"}
             chartType="PieChart"
@@ -35,8 +52,9 @@ export const Statistics = () => {
             }}
             rootProps={{ "data-testid": "1" }}
           />
-        </Grid>
-      </Box>
-    </div>
+        
+
+      </Box> */}
+    </Container>
   );
 };
