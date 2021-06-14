@@ -6,7 +6,7 @@ import { LoginRouter } from "../../api/LoginApi";
 
 export const 
     isAuthenticated = () => {
-        const data = { email: this.email, password: this.password };
+        const data = { userName: this.userName, password: this.password };
         const requestInfo = {
             method: 'POST',
             body: JSON.stringify(data),
