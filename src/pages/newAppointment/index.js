@@ -111,7 +111,7 @@ const NewAppointment = ({ onClick }) => {
       client: selectedClient,
       specialists: selectedSpecialist,
       status: appointmentStatus,
-      // details: detailsAppointment,
+      details: detailsAppointment,
     };
     setLoading(true);
     createAttendances(appointmentData)

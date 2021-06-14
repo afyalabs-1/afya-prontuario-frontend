@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 16,
     marginLeft: 16,
   },
+  largeAvatar: {
+    width: theme.spacing(8),
+    height: theme.spacing(8),
+  },
 }));
 
 const MedicalRecord = () => {
@@ -49,7 +53,11 @@ const MedicalRecord = () => {
           className={classes.clientDetail}
         >
           <Grid item xs={false}>
-            <Avatar alt={clientName} src={clientPhoto} />
+            <Avatar
+              alt={clientName}
+              src={clientPhoto}
+              className={classes.largeAvatar}
+            />
           </Grid>
           <Grid item xs={false}>
             <Typography gutterBottom variant="h6">
@@ -64,13 +72,14 @@ const MedicalRecord = () => {
             variant="subtitle1"
             className={classes.clientDetail}
           >
-            Atendimentos ({clientAppointments.length})
+            Registros de prontuário ({clientAppointments.length})
           </Typography>
           {clientAppointments.map((appointment) => (
             <AppointmentCard
               key={appointment.id}
               appointment={appointment}
               showClientData={false}
+              showDetails={true}
             ></AppointmentCard>
           ))}
         </div>

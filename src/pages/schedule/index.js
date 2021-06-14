@@ -50,6 +50,7 @@ const Schedule = () => {
               key={appointment.id}
               appointment={appointment}
               showClientData={true}
+              showDetails={false}
             />
           ))
         )}
