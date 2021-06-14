@@ -12,7 +12,7 @@ import MedicalRecord from "../pages/medicalRecord/index";
 import NewAppointment from "../pages/newAppointment/index";
 import Schedule from "../pages/schedule/index";
 import Specialist from "../pages/specialist/index";
-import SpecialistRegistration from "../../pages/";
+import SpecialistRegistration from "../../pages/specialistRegistration/index";
 
 const Routes = () => {
   return (
