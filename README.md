@@ -38,15 +38,28 @@ Para iniciar em modo de desenvolvimento:
 
     npm start 
 
-### Telas desenvolvidas
+### Principais telas desenvolvidas
 ##### Login
-##### Cadastro de pacientes
+
+A tela de login é a primeira tela a ser exibida para o usuário. Criamos um formulário de acesso com uma interface amigável e baseada em um dos principais modelos de página disponibilizados pelo Material-UI, no estilo _sign in side_. Para acessar as páginas internas do sistema, o usuário deve possuir o _username_ e _senha_ previamente cadastrados pelo administrador do sistema. Usuários não cadastrados e/ou não autorizados não são capazes de acessar outras rotas do sistema. Caso haja tentativas de utilização de credenciais não aprovadas, receberão uma mensagem de erro, seguindo fundamentos de autenticação e autorização.
+
+
+![ ](https://i.imgur.com/JeSyUZG.png)
+
+
+
+##### Cadastro de pacientes e especialistas
+
+As páginas de cadastro de pacientes e cadastro de especialistas possuem algumas características em comum. Destacam-se as funcionalidades de busca e validação de CEP através do viaCep, um webservice gratuito e de alto desempenho para consultar Códigos de Endereçamento Postal (CEP) do Brasil, e o de registro de informações no banco de dados.
+
 ##### Cadastro de profissões
-##### Cadastro de especialistas
+_a definir_
+
 ##### Novo atendimento
+_a definir_
+
 ##### Prontuários
-
-
+_a definir_
 
 
 ### Estrutura do projeto
