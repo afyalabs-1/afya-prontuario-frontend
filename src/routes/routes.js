@@ -1,7 +1,7 @@
 import React from "react";
 
 import { BrowserRouter, Router, Switch, Route } from "react-router-dom";
-import PrivateRoutes from "./private.routes";
+import PrivateRoute from "./PrivateRoute";
 
 //Páginas
 import Customer from "../pages/customer/index";
@@ -18,18 +18,18 @@ const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <PrivateRoutes path="/" exact component={Dashboard} />
+        <PrivateRoute path="/" exact component={Dashboard} />
         <Route path="/login" component={Login} />
-        <PrivateRoutes
+        <PrivateRoute
           path="/customerRegistration"
           component={CustomerRegistration}
         />
-        <PrivateRoutes path="/customer" component={Customer} />
-        <PrivateRoutes path="/medicalRecord" component={MedicalRecord} />
-        <PrivateRoutes path="/newAppointment" component={NewAppointment} />
-        <PrivateRoutes path="/schedule" component={Schedule} />
-        <PrivateRoutes path="/specialist" component={Specialist} />
-        <PrivateRoutes
+        <PrivateRoute path="/customer" component={Customer} />
+        <PrivateRoute path="/medicalRecord" component={MedicalRecord} />
+        <PrivateRoute path="/newAppointment" component={NewAppointment} />
+        <PrivateRoute path="/schedule" component={Schedule} />
+        <PrivateRoute path="/specialist" component={Specialist} />
+        <PrivateRoute
           path="/specialistRegistration"
           component={SpecialistRegistration}
         />
