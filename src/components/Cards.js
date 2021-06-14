@@ -73,7 +73,7 @@ export const Cards = () => {
           </Grid>
 
           <Grid item xs={4}>
-            <Link to="/customer">
+            <Link to="/customerRegistration">
               <Card className={classes.card} variant="outlined">
                 <CardContent>
                   <Grid container spacing={2}>
