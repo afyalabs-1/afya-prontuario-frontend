@@ -44,14 +44,18 @@ const Schedule = () => {
     <div>
       <Navbar />
       <Container>
-      <SearchByFilters onClick={() => getFilteredAppointments()} />
-      {loading ? (
-        <Loading />
-      ) : (
-        appointments.map((appointment) => (
-          <AppointmentCard key={appointment.id} appointment={appointment} />
-        ))
-      )}
+        <SearchByFilters onClick={() => getFilteredAppointments()} />
+        {loading ? (
+          <Loading />
+        ) : (
+          appointments.map((appointment) => (
+            <AppointmentCard
+              key={appointment.id}
+              appointment={appointment}
+              showClientData={true}
+            />
+          ))
+        )}
       </Container>
     </div>
   );

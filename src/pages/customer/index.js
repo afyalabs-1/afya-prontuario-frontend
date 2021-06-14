@@ -31,6 +31,12 @@ const Customer = () => {
   const [clients, setClients] = useState([]);
   const linkMedicalRecord = (props) => <Link to="/medicalRecord" {...props} />;
 
+  const getClientData = (clientId, clientName, clientProfilePhoto) => {
+    localStorage.setItem("clientId", clientId);
+    localStorage.setItem("clientName", clientName);
+    localStorage.setItem("clientProfilePhoto", clientProfilePhoto);
+  };
+
   useEffect(() => {
     getClients()
       .then((response) => {
@@ -63,7 +69,18 @@ const Customer = () => {
                     </Typography>
                   </Grid>
                   <Grid item xs={3} justify="flex-end">
-                    <Button component={linkMedicalRecord}>+ Prontuário</Button>
+                    <Button
+                      component={linkMedicalRecord}
+                      onClick={() =>
+                        getClientData(
+                          client.id,
+                          client.name,
+                          client.profilePictureUrl
+                        )
+                      }
+                    >
+                      + Prontuário
+                    </Button>
                   </Grid>
                 </Grid>
               </ListItem>

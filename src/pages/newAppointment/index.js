@@ -68,6 +68,7 @@ const NewAppointment = ({ onClick }) => {
   const [appointmentStatus, setAppointmentStatus] = useState("1");
   const [clients, setClients] = useState([]);
   const [specialists, setSpecialists] = useState([]);
+  const [detailsAppointment, setDetailsAppointment] = useState([""]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -110,6 +111,7 @@ const NewAppointment = ({ onClick }) => {
       client: selectedClient,
       specialists: selectedSpecialist,
       status: appointmentStatus,
+      // details: detailsAppointment,
     };
     setLoading(true);
     createAttendances(appointmentData)
@@ -177,6 +179,7 @@ const NewAppointment = ({ onClick }) => {
                     id="dateTime"
                     label="Dia e Hora"
                     type="datetime-local"
+                    variant="outlined"
                     className={classes.margin}
                     InputLabelProps={{
                       shrink: true,
@@ -229,6 +232,17 @@ const NewAppointment = ({ onClick }) => {
                   </FormControl>
                 </Grid>
               </Grid>
+              <TextField
+                id="details"
+                fullWidth={true}
+                label="+ Detalhes"
+                variant="outlined"
+                className={classes.margin}
+                multiline
+                rows={5}
+                value={detailsAppointment}
+                onChange={(e) => setDetailsAppointment(e.target.value)}
+              />
 
               <Grid
                 container

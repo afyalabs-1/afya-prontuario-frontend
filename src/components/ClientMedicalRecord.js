@@ -7,7 +7,6 @@ import { IoMdContact } from "react-icons/io";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-// import CircularIndeterminate from "../components/CircularInderteminate";
 
 const useStyles = makeStyles({
   root: {
@@ -26,7 +25,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ClientMedicalRecord = ({ medicalrecord }) => {
+const ClientMedicalRecord = ({ clientAppointments }) => {
   const classes = useStyles();
 
   return (
@@ -40,7 +39,9 @@ const ClientMedicalRecord = ({ medicalrecord }) => {
               ></IoMdContact>
             </Grid>
             <Grid item xs={10} sm={10}>
-              <Typography variant="h4">{medicalrecord.paciente}</Typography>
+              <Typography variant="h4">
+                {clientAppointments.client.name}
+              </Typography>
               <br />
               <Card className={classes.root} variant="outlined">
                 <CardContent>
@@ -49,13 +50,14 @@ const ClientMedicalRecord = ({ medicalrecord }) => {
                     color="textSecondary"
                     gutterBottom
                   >
-                    {medicalrecord.name}
+                    {clientAppointments.client.name}
                   </Typography>
                   <Typography className={classes.pos} color="textSecondary">
-                    {medicalrecord.specialist} - {medicalrecord.date} -{" "}
-                    {medicalrecord.time}
+                    {clientAppointments.specialist.name} -{" "}
+                    {clientAppointments.serviceDate} -{" "}
+                    {clientAppointments.serviceTime}
                     <br />
-                    {medicalrecord.description}
+                    {/* {medicalrecord.description} */}
                     <br />
                     <br />
                   </Typography>
@@ -63,9 +65,7 @@ const ClientMedicalRecord = ({ medicalrecord }) => {
               </Card>
 
               {/* <CircularIndeterminate></CircularIndeterminate> */}
-
             </Grid>
-           
           </Grid>
         </div>
       </Box>
