@@ -52,14 +52,13 @@ A tela de login é a primeira tela a ser exibida para o usuário. Criamos um for
 
 As páginas de cadastro de pacientes e cadastro de especialistas possuem algumas características em comum. Destacam-se as funcionalidades de busca e validação de CEP através do viaCep, um webservice gratuito e de alto desempenho para consultar Códigos de Endereçamento Postal (CEP) do Brasil, e o de registro de informações no banco de dados.
 
-##### Cadastro de profissões
-_a definir_
-
 ##### Novo atendimento
-_a definir_
+
+Para cada novo atendimento a ser realizado, é necessário preencher o formulário com as seguintes informações: nome do cliente, especialistas, dia e  hora, valor da consulta, e detalhes necessários para realização do atendimento (ex: queixas principais).
 
 ##### Prontuários
-_a definir_
+
+Para cada cliente cadastrado, há a abertura de um novo prontuário. Na tela de prontuário, é possível conferir o histórico de cada atendimento realizado.
 
 
 ### Estrutura do projeto
