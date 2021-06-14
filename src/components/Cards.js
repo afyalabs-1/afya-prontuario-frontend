@@ -60,9 +60,7 @@ export const Cards = () => {
                   desenvolvimento da personalidade da pessoa natural. Toda
                   pessoa natural tem assegurada a titularidade de seus dados
                   pessoais e garantidos os direitos fundamentais de liberdade,
-                  de intimidade e de privacidade, nos termos da LGPD. Ao
-                  utilizar o AfyaGama, lembre-se de garantir todos estes
-                  direitos garantidos por lei.
+                  de intimidade e de privacidade, nos termos da LGPD. 
                 </Typography>
                 <br />
                 <Typography align="right" variant="body1">
