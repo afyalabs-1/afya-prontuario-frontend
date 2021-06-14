@@ -63,8 +63,7 @@ const NewAppointment = ({ onClick }) => {
 
   const [selectedClient, setSelectedClient] = useState(null);
   const [selectedSpecialist, setSelectedSpecialist] = useState(null);
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [dateTime, setDateTime] = useState("");
   const [price, setPrice] = useState("");
   const [appointmentStatus, setAppointmentStatus] = useState("1");
   const [clients, setClients] = useState([]);
@@ -73,6 +72,7 @@ const NewAppointment = ({ onClick }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log("teste");
     getClients()
       .then((response) => {
         setClients(response.data);
@@ -104,8 +104,8 @@ const NewAppointment = ({ onClick }) => {
 
   const createAppointment = () => {
     const appointmentData = {
-      serviceDate: date + time,
-      serviceTime: date + time,
+      serviceDate: dateTime,
+      serviceTime: dateTime,
       value: price,
       client: selectedClient,
       specialists: selectedSpecialist,
@@ -134,7 +134,7 @@ const NewAppointment = ({ onClick }) => {
                 id="name"
                 options={clients}
                 onChange={(e, value) => setSelectedClient(value.id)}
-                getOptionLabel={(option) => option.clientName}
+                getOptionLabel={(option) => option.name}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -174,28 +174,15 @@ const NewAppointment = ({ onClick }) => {
               >
                 <Grid item xs="auto">
                   <TextField
-                    id="date"
-                    label="Dia"
-                    type="date"
+                    id="dateTime"
+                    label="Dia e Hora"
+                    type="datetime-local"
                     className={classes.margin}
                     InputLabelProps={{
                       shrink: true,
                     }}
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                  />
-                </Grid>
-                <Grid item xs="auto">
-                  <TextField
-                    id="time"
-                    label="Hora"
-                    type="time"
-                    className={classes.margin}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-                    defaultValue={time}
-                    onChange={(e) => setTime(e.target.value)}
+                    value={dateTime}
+                    onChange={(e) => setDateTime(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs="auto">
@@ -259,6 +246,7 @@ const NewAppointment = ({ onClick }) => {
                     startIcon={<ScheduleIcon />}
                     onClick={() => {
                       createAppointment();
+                      console.log(dateTime);
                     }}
                     disabled={loading}
                   >
