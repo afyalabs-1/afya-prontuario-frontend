@@ -18,15 +18,18 @@ const Routes = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={Dashboard} />
+        <PrivateRoutes path="/" exact component={Dashboard} />
         <Route path="/login" component={Login} />
-        <Route path="/customerRegistration" component={CustomerRegistration} />
-        <Route path="/customer" component={Customer} />
-        <Route path="/medicalRecord" component={MedicalRecord} />
-        <Route path="/newAppointment" component={NewAppointment} />
-        <Route path="/schedule" component={Schedule} />
-        <Route path="/specialist" component={Specialist} />
-        <Route
+        <PrivateRoutes
+          path="/customerRegistration"
+          component={CustomerRegistration}
+        />
+        <PrivateRoutes path="/customer" component={Customer} />
+        <PrivateRoutes path="/medicalRecord" component={MedicalRecord} />
+        <PrivateRoutes path="/newAppointment" component={NewAppointment} />
+        <PrivateRoutes path="/schedule" component={Schedule} />
+        <PrivateRoutes path="/specialist" component={Specialist} />
+        <PrivateRoutes
           path="/specialistRegistration"
           component={SpecialistRegistration}
         />
