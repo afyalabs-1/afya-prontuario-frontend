@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-
+import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
-
-import EditIcon from "@material-ui/icons/Edit";
+import CardActions from "@material-ui/core/CardActions";
+import IconButton from "@material-ui/core/IconButton";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Collapse } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,53 +21,100 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(8),
     height: theme.spacing(8),
   },
+  expand: {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: "rotate(180deg)",
+  },
+  collapseContent: {
+    padding: 12,
+  },
 }));
 
-const AppointmentCard = ({ appointment }) => {
+const AppointmentCard = ({ appointment, showClientData, showDetails }) => {
   const classes = useStyles();
+  const [expanded, setExpanded] = useState(false);
+
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
   return (
     <div className={classes.root}>
       <Card variant="outlined">
         <CardContent className={classes.root}>
-          <Grid container spacing={4}>
-            <Grid item xs={3} alignItems="center">
-              <Typography variant="subtitle2" alignJustify bold>
-                {appointment.date}
-              </Typography>
-              <Typography variant="body1" alignJustify component="p">
-                {appointment.time}
+          <Grid container spacing={4} alignItems="center">
+            <Grid item xs>
+              <Typography variant="subtitle2">Data agendada:</Typography>
+              <Typography variant="subtitle2">
+                {appointment.serviceDate}
               </Typography>
             </Grid>
-            <Grid item xs={3} alignItems="center">
-              <Typography gutterBottom variant="subtitle1">
-                {appointment.clientName}
-              </Typography>
-              <Avatar
-                alt={appointment.clientName}
-                src={appointment.photo}
-                className={classes.largeAvatar}
-              />
-            </Grid>
-            <Grid item xs={3}>
+            {showClientData ? (
+              <Grid item xs>
+                <Typography gutterBottom variant="subtitle1">
+                  {appointment.client.name}
+                </Typography>
+                <Avatar
+                  alt={appointment.client.name}
+                  src={appointment.client.profilePictureUrl}
+                  className={classes.largeAvatar}
+                />
+              </Grid>
+            ) : (
+              ""
+            )}
+            <Grid item xs>
+              {appointment.specialists ? (
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Especialista: {appointment.specialists.name}
+                </Typography>
+              ) : (
+                ""
+              )}
               <Typography variant="body2" color="textSecondary" component="p">
-                Especialista: {appointment.specialist}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Valor: R$:{appointment.price}
+                Valor: R$:{appointment.value}
               </Typography>
             </Grid>
-            <Grid item xs={3} alignItems="center">
-              <Typography paragraph>Status do Atendimento: Agendado</Typography>
-              <IconButton aria-label="edit">
-                <EditIcon />
-              </IconButton>
-              <Button variant="contained" color="primary">
-                Prontuário
-              </Button>
+            <Grid item xs>
+              <Typography paragraph>
+                Status do Atendimento: {appointment.status}
+              </Typography>
             </Grid>
           </Grid>
         </CardContent>
+        {showDetails ? (
+          <div>
+            <CardActions disableSpacing>
+              <IconButton
+                className={clsx(classes.expand, {
+                  [classes.expandOpen]: expanded,
+                })}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </IconButton>
+            </CardActions>
+            <Collapse
+              in={expanded}
+              timeout="auto"
+              unmountOnExit
+              className={classes.collapseContent}
+            >
+              <Typography variant="subtitle2">Detalhes:</Typography>
+              <Typography paragraph>{appointment.details}</Typography>
+            </Collapse>
+          </div>
+        ) : (
+          ""
+        )}
       </Card>
     </div>
   );
