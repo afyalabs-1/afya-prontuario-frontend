@@ -70,7 +70,7 @@ export const Cards = () => {
             </Card>
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Link to="/customerRegistration">
               <Card className={classes.card} variant="outlined">
                 <CardContent>
@@ -98,7 +98,7 @@ export const Cards = () => {
             </Link>
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Link to="/newAppointment">
               <Card className={classes.card} variant="outlined">
                 <CardContent>
@@ -126,7 +126,7 @@ export const Cards = () => {
             </Link>
           </Grid>
 
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Link to="/schedule">
               <Card className={classes.card} variant="outlined">
                 <CardContent>
